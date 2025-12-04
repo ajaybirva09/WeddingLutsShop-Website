@@ -1,28 +1,24 @@
- <!--
-  WeddingLutsShop - Complete Website Consolidation
-  BRANDING UPDATE: Renamed to WeddingLutsShop.com.
-  Theme: White/Gold/Black (Luxury Cinematic Style)
--->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeddingLutsShop | Premium Wedding LUTs, Templates & Transitions</title>
-    <meta name="description" content="The ultimate collection of Premium Cinematic LUTs, Video Templates, and Transitions tailored for wedding filmmakers.">
-    <meta name="keywords" content="wedding LUTs, video transitions, film looks, video presets, wedding video templates">
-
-    <!-- Load Tailwind CSS from CDN -->
+    <title>WeddingLutsShop | Premium LUTs, Templates & AI Tools</title>
+    <meta name="description" content="Professional wedding LUTs, video templates, transitions, and AI-powered video tools for filmmakers.">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-gold': '#ffcc00', 
-                        'primary-white': '#f5f5f5', 
-                        'secondary-light-gray': '#e0e0e0', 
-                        'dark-text': '#1a1a1a', 
+                        'primary-gold': '#ffcc00',
+                        'primary-white': '#f5f5f5',
+                        'secondary-light-gray': '#e0e0e0',
+                        'dark-text': '#1a1a1a',
+                        'premium-purple': '#8a2be2',
+                        'ai-blue': '#0066ff'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -31,151 +27,210 @@
                         fadeInUp: {
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        pulseGold: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.7' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(0)' },
                         }
                     },
                     animation: {
                         fadeInUp: 'fadeInUp 0.6s ease-out forwards',
+                        pulseGold: 'pulseGold 2s ease-in-out infinite',
+                        slideIn: 'slideIn 0.5s ease-out forwards',
                     }
                 }
             }
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+    <!-- Video.js for video player -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    
     <style>
-        .text-shadow-gold {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        :root {
+            --gold: #ffcc00;
+            --dark: #1a1a1a;
+            --purple: #8a2be2;
+            --blue: #0066ff;
         }
-        /* Style for Scroll Spy/Active Nav links */
-        .nav-link.active {
-            color: #ffcc00;
-            border-bottom: 2px solid #ffcc00;
+        
+        body {
+            background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+            overflow-x: hidden;
         }
-
-        /* --- Before/After Slider CSS --- */
-        .before-after-container {
+        
+        /* Auth Modal Styles */
+        .auth-modal {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-tab {
+            transition: all 0.3s ease;
+        }
+        
+        .auth-tab.active {
+            background: #ffcc00;
+            color: #1a1a1a;
+            transform: scale(1.05);
+        }
+        
+        /* Before/After Slider */
+        .comparison-slider {
             position: relative;
-            max-width: 100%;
-            height: 450px;
+            width: 100%;
+            height: 500px;
             overflow: hidden;
-            user-select: none;
-            cursor: ew-resize;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
-
-        .before-after-img {
+        
+        .comparison-slider img {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            user-select: none;
         }
-
-        .after-img {
-            clip-path: inset(0 0 0 50%);
-        }
-
-        .slider-handle {
+        
+        .slider-divider {
             position: absolute;
             top: 0;
             left: 50%;
-            transform: translateX(-50%);
             height: 100%;
             width: 4px;
-            background-color: #ffcc00;
-            cursor: ew-resize;
-            pointer-events: none;
-            z-index: 10;
-        }
-        .slider-handle::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
             background: #ffcc00;
-            border-radius: 50%;
-            border: 3px solid #1a1a1a;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            cursor: ew-resize;
+            z-index: 10;
+            transform: translateX(-50%);
         }
-        .slider-handle::after {
+        
+        .slider-divider::before {
             content: '↔';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: #ffcc00;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 16px;
             color: #1a1a1a;
+            font-weight: bold;
+            font-size: 20px;
+            border: 3px solid #1a1a1a;
+        }
+        
+        /* Video AI Generator Styles */
+        .ai-video-container {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .ai-loader {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+        }
+        
+        .ai-progress {
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #ffcc00, #ff9900);
+            transition: width 2s ease-in-out;
+        }
+        
+        /* Price Cards */
+        .price-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .price-card.popular {
+            border-color: #ffcc00;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .price-card.popular::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -35px;
+            background: #ffcc00;
+            color: #1a1a1a;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-size: 12px;
             font-weight: bold;
         }
         
-        /* Video Container Styles */
-        .video-container {
+        /* Glowing effect for AI section */
+        .glow {
+            box-shadow: 0 0 20px rgba(0, 102, 255, 0.5);
+        }
+        
+        /* Video Comparison */
+        .video-comparison {
             position: relative;
             width: 100%;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
+            height: 400px;
             overflow: hidden;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 15px;
         }
-        .video-container iframe {
+        
+        .video-comparison video {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
         }
         
-        /* Transition Cards */
-        .transition-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 12px;
-            transition: all 0.4s ease;
-        }
-        .transition-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-        .transition-card .overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            color: white;
-            padding: 20px;
-            transform: translateY(100%);
-            transition: transform 0.4s ease;
-        }
-        .transition-card:hover .overlay {
-            transform: translateY(0);
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
         }
         
-        /* Modal styles */
-        .modal { 
-            transition: opacity 0.3s ease-in-out; 
-            backdrop-filter: blur(5px);
-        }
-        .modal.hidden { 
-            opacity: 0; 
-            pointer-events: none; 
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
         }
         
-        /* Print styles for contact/faq/about pages */
-        @media print {
-            .no-print { display: none !important; }
+        ::-webkit-scrollbar-thumb {
+            background: #ffcc00;
+            border-radius: 5px;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
         }
         
         /* Gradient Text */
@@ -186,1919 +241,1188 @@
             background-clip: text;
         }
         
-        /* Pulse animation for CTA */
-        @keyframes pulse-gold {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 204, 0, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(255, 204, 0, 0); }
+        .gradient-text-purple {
+            background: linear-gradient(45deg, #8a2be2, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .pulse-btn {
-            animation: pulse-gold 2s infinite;
+        
+        /* AI Processing Animation */
+        @keyframes ai-processing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .ai-processing {
+            animation: ai-processing 1s linear infinite;
         }
     </style>
 </head>
-<body class="bg-primary-white text-dark-text font-sans antialiased">
+<body class="text-dark-text font-sans">
 
-    <!-- Global State & Configuration -->
-    <script type="module">
-        // --- MANDATORY FIREBASE/CANVAS GLOBALS ---
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth, userId;
-        let products = [];
-        let cart = [];
-        let lastOrderDetails = null; // Stores details for the invoice
-        let purchasedProducts = []; // Track purchased products for download
-
-        // --- Firebase/Firestore Imports and Initialization ---
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        const initFirebase = async () => {
-            if (!firebaseConfig) {
-                console.warn("Firebase config not available. Persistence features disabled.");
-                return;
-            }
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                await new Promise(resolve => {
-                    const unsubscribe = onAuthStateChanged(auth, (user) => {
-                        if (user) {
-                            userId = user.uid;
-                            document.getElementById('user-id-display').textContent = userId;
-                        } else {
-                            userId = 'anonymous';
-                        }
-                        unsubscribe();
-                        resolve();
-                    });
-                });
-
-            } catch (error) {
-                console.error("Error initializing Firebase or authentication:", error);
-                userId = crypto.randomUUID();
-                document.getElementById('user-id-display').textContent = userId;
-            }
-        };
-        window.addEventListener('load', initFirebase);
-
-
-        // --- E-commerce Logic & UI Updates ---
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // Hardcoded products with download URLs
-            products = [
-                { 
-                    id: 'wg001', 
-                    name: 'Wedding Gold LUTs', 
-                    price: 999, 
-                    originalPrice: 1500, 
-                    description: 'Achieve luxurious, warm cinematic tones.',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-WeddingGoldLUTs',
-                    category: 'luts',
-                    thumbnail: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['15 LUTs', 'LOG to Rec.709', 'Universal .CUBE format']
-                },
-                { 
-                    id: 'cf002', 
-                    name: 'Cinematic Film Pack', 
-                    price: 1499, 
-                    originalPrice: 2000, 
-                    description: '10 LUTs for classic, moody film emulation.',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-CinematicFilmPack',
-                    category: 'luts',
-                    thumbnail: 'https://images.unsplash.com/photo-1519677100203-7c61d0b01354?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['10 Film LUTs', 'Vintage Looks', 'DR Compatibility']
-                },
-                { 
-                    id: 'um003', 
-                    name: 'Urban Moody LUTs', 
-                    price: 799, 
-                    originalPrice: 1200, 
-                    description: 'High-contrast looks for street and city visuals.',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-UrbanMoodyLUTs',
-                    category: 'luts',
-                    thumbnail: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['8 Urban LUTs', 'High Contrast', 'Desaturated Looks']
-                },
-                { 
-                    id: 'vt005', 
-                    name: 'Cinematic Transitions Pack', 
-                    price: 2499, 
-                    originalPrice: 3500, 
-                    description: '30+ premium transitions for wedding films.',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-TransitionsPack',
-                    category: 'transitions',
-                    thumbnail: 'https://images.unsplash.com/photo-1492684223066-e9e5a0c4c0a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['30+ Transitions', '4K Resolution', 'Easy Customization']
-                },
-                { 
-                    id: 'tp006', 
-                    name: 'Wedding Video Templates', 
-                    price: 3299, 
-                    originalPrice: 4500, 
-                    description: 'Complete wedding video templates with placeholders.',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-VideoTemplates',
-                    category: 'templates',
-                    thumbnail: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['5 Templates', 'Premiere Pro', 'After Effects']
-                },
-                { 
-                    id: 'ub004', 
-                    name: 'Ultimate Bundle', 
-                    price: 4999, 
-                    originalPrice: 8500, 
-                    description: 'ALL our LUTs, Templates & Transitions - Massive savings!',
-                    downloadUrl: 'https://drive.google.com/uc?export=download&id=1FjQj-XYZ-EXAMPLE-UltimateBundle',
-                    category: 'bundle',
-                    thumbnail: 'https://images.unsplash.com/photo-1478147427282-58a87a120781?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    features: ['All Products', 'Lifetime Updates', 'Priority Support']
-                },
-            ];
-
-            // Initialize sample LUTs display
-            initializeSampleLUTs();
-
-            const updateCartUI = () => {
-                const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                const cartList = document.getElementById('cart-items-list');
-                const cartTotalElement = document.getElementById('cart-total');
-
-                document.getElementById('cart-badge').textContent = cartCount;
-
-                if (!cartList || !cartTotalElement) return;
-
-                cartList.innerHTML = ''; 
-
-                if (cart.length === 0) {
-                    cartList.innerHTML = '<p class="text-dark-text/70 py-4 text-center">Your cart is empty.</p>';
-                } else {
-                    cart.forEach(item => {
-                        const li = document.createElement('li');
-                        li.className = 'flex justify-between items-center py-2 border-b border-primary-gold last:border-0';
-                        li.innerHTML = `
-                            <span>${item.name} (${item.quantity})</span>
-                            <span class="font-bold">₹${(item.price * item.quantity).toLocaleString('en-IN')}</span>
-                            <button data-id="${item.id}" class="remove-item text-red-600 hover:text-red-800 text-sm ml-4">Remove</button>
-                        `;
-                        cartList.appendChild(li);
-                    });
-                }
-                cartTotalElement.textContent = `₹${cartTotal.toLocaleString('en-IN')}`;
-
-                document.querySelectorAll('.remove-item').forEach(button => {
-                    button.addEventListener('click', (e) => {
-                        const itemId = e.target.dataset.id;
-                        removeFromCart(itemId);
-                    });
-                });
-            };
-
-            window.addToCart = (productId) => {
-                const product = products.find(p => p.id === productId);
-                if (!product) return;
-                const existingItem = cart.find(item => item.id === productId);
-
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({ 
-                        id: product.id, 
-                        name: product.name, 
-                        price: product.price, 
-                        quantity: 1,
-                        downloadUrl: product.downloadUrl,
-                        category: product.category
-                    });
-                }
-                updateCartUI();
-                openModal('cart-modal');
-                showNotification(`Added 1x ${product.name} to cart!`, 'success');
-            };
-
-            const removeFromCart = (productId) => {
-                const index = cart.findIndex(item => item.id === productId);
-                if (index > -1) {
-                    const item = cart[index];
-                    item.quantity -= 1;
-                    if (item.quantity <= 0) {
-                        cart.splice(index, 1);
-                    }
-                }
-                updateCartUI();
-                showNotification(`Item removed from cart.`, 'info');
-            };
-
-            // Initialize Sample LUTs Display
-            function initializeSampleLUTs() {
-                const sampleGrid = document.getElementById('sample-luts-grid');
-                if (!sampleGrid) return;
-
-                // Sample LUTs data
-                const sampleLUTs = [
-                    {
-                        name: "Golden Hour",
-                        image: "https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                        description: "Warm sunset tones for outdoor weddings"
-                    },
-                    {
-                        name: "Moody Film",
-                        image: "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                        description: "Vintage film look with muted colors"
-                    },
-                    {
-                        name: "Clean & Crisp",
-                        image: "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                        description: "Bright, clean look for indoor weddings"
-                    },
-                    {
-                        name: "Dark & Dramatic",
-                        image: "https://images.unsplash.com/photo-1516496636080-14fb876e029d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-                        description: "High contrast dramatic look"
-                    }
-                ];
-                
-                sampleGrid.innerHTML = '';
-                
-                sampleLUTs.forEach((lut, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'sample-card bg-white shadow-lg rounded-xl overflow-hidden hover:shadow-2xl transition-all duration-300';
-                    card.innerHTML = `
-                        <div class="relative overflow-hidden h-48">
-                            <img src="${lut.image}" 
-                                 alt="${lut.name}" 
-                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-                            <div class="absolute bottom-4 left-4">
-                                <span class="text-white text-lg font-bold">${lut.name}</span>
-                                <p class="text-white/80 text-sm">${lut.description}</p>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <div class="flex justify-between items-center">
-                                <div>
-                                    <span class="text-xs text-dark-text/60 bg-primary-gold/20 px-2 py-1 rounded">.CUBE Format</span>
-                                    <span class="text-xs text-dark-text/60 bg-secondary-light-gray px-2 py-1 rounded ml-2">Free Sample</span>
-                                </div>
-                                <button onclick="downloadSampleLUT(${index})" 
-                                        class="text-primary-gold hover:text-yellow-600 font-medium text-sm flex items-center">
-                                    <i class="fas fa-download mr-1"></i> Download Sample
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                    sampleGrid.appendChild(card);
-                });
-            }
-
-            // Download Sample LUT (free sample) - FIXED 404 ERROR
-            window.downloadSampleLUT = (index) => {
-                // Using GitHub Gist for sample LUT files (no 404 errors)
-                const sampleUrls = [
-                    'https://gist.githubusercontent.com/sainkb/3d9647a3c49c223d18e60b0f0e2a7f8e/raw/3b2de6f6f20b4cc6f9c4e15a4d7c5e5f4c3b2a1c/sample-golden-hour.cube',
-                    'https://gist.githubusercontent.com/sainkb/3d9647a3c49c223d18e60b0f0e2a7f8e/raw/3b2de6f6f20b4cc6f9c4e15a4d7c5e5f4c3b2a1c/sample-moody-film.cube',
-                    'https://gist.githubusercontent.com/sainkb/3d9647a3c49c223d18e60b0f0e2a7f8e/raw/3b2de6f6f20b4cc6f9c4e15a4d7c5e5f4c3b2a1c/sample-clean-crisp.cube',
-                    'https://gist.githubusercontent.com/sainkb/3d9647a3c49c223d18e60b0f0e2a7f8e/raw/3b2de6f6f20b4cc6f9c4e15a4d7c5e5f4c3b2a1c/sample-dark-dramatic.cube'
-                ];
-                
-                const sampleNames = ['Golden-Hour', 'Moody-Film', 'Clean-Crisp', 'Dark-Dramatic'];
-                const url = sampleUrls[index % sampleUrls.length];
-                
-                // Create invisible download link
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `WeddingLutsShop_${sampleNames[index]}_Sample.cube`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                showNotification(`Downloading ${sampleNames[index]} sample LUT...`, 'success');
-                
-                // In case the download doesn't start, show alternative
-                setTimeout(() => {
-                    document.getElementById('sample-alert').classList.remove('hidden');
-                }, 2000);
-            };
-
-            // Notification/Message Box
-            const showNotification = (message, type = 'info') => {
-                const notificationEl = document.getElementById('app-notification');
-                if (!notificationEl) return;
-                
-                // Set color based on type
-                if (type === 'success') {
-                    notificationEl.className = notificationEl.className.replace('bg-red-500', 'bg-green-500').replace('bg-blue-500', 'bg-green-500');
-                    if (!notificationEl.className.includes('bg-green-500')) {
-                        notificationEl.classList.add('bg-green-500');
-                    }
-                } else if (type === 'error') {
-                    notificationEl.className = notificationEl.className.replace('bg-green-500', 'bg-red-500').replace('bg-blue-500', 'bg-red-500');
-                    if (!notificationEl.className.includes('bg-red-500')) {
-                        notificationEl.classList.add('bg-red-500');
-                    }
-                } else {
-                    notificationEl.className = notificationEl.className.replace('bg-green-500', 'bg-blue-500').replace('bg-red-500', 'bg-blue-500');
-                    if (!notificationEl.className.includes('bg-blue-500')) {
-                        notificationEl.classList.add('bg-blue-500');
-                    }
-                }
-                
-                notificationEl.textContent = message;
-                notificationEl.classList.remove('hidden');
-                notificationEl.classList.add('animate-fadeInUp');
-                
-                setTimeout(() => {
-                    notificationEl.classList.add('hidden');
-                    notificationEl.classList.remove('animate-fadeInUp');
-                }, 3000);
-            };
-
-            // Modal Handlers
-            window.openModal = (modalId) => {
-                const modal = document.getElementById(modalId);
-                if (modal) {
-                    modal.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden'; // Prevent scrolling
-                    if (modalId === 'cart-modal') { updateCartUI(); }
-                }
-            };
-            window.closeModal = (modalId) => {
-                const modal = document.getElementById(modalId);
-                if (modal) { 
-                    modal.classList.add('hidden'); 
-                    document.body.style.overflow = 'auto'; // Restore scrolling
-                }
-            };
-            document.querySelectorAll('[data-modal-close]').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const modal = e.target.closest('.modal');
-                    if (modal) {
-                        closeModal(modal.id);
-                    }
-                });
-            });
-
-            // Close modal when clicking outside
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal(modal.id);
-                    }
-                });
-            });
-
-            // --- Razorpay Payment Integration Simulation ---
-            document.getElementById('checkout-button')?.addEventListener('click', () => {
-                if (cart.length === 0) {
-                    showNotification('Your cart is empty. Please add products to proceed.', 'error');
-                    return;
-                }
-                closeModal('cart-modal');
-                startRazorpayPayment();
-            });
-
-            const startRazorpayPayment = () => {
-                if (typeof window.Razorpay === 'undefined') {
-                    console.error("Razorpay SDK is not loaded. Cannot start payment.");
-                    showNotification("Payment service unavailable. Please try again.", 'error');
-                    return;
-                }
-
-                const currentCart = [...cart];
-                const totalAmount = currentCart.reduce((sum, item) => sum + (item.price * item.quantity), 0) * 100; // Amount in paise
-                const purchaseItems = currentCart.map(item => ({ 
-                    id: item.id, 
-                    name: item.name, 
-                    price: item.price, 
-                    quantity: item.quantity,
-                    downloadUrl: item.downloadUrl,
-                    category: item.category
-                }));
-
-                purchasedProducts = purchaseItems; // Store for download
-
-                const options = {
-                    key: "rzp_test_Rmk9Mqk9vXexJp", // Test Key - Replace with your production key
-                    amount: totalAmount,
-                    currency: "INR",
-                    name: "WeddingLutsShop",
-                    description: "Digital LUTs & Templates Purchase",
-                    image: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80",
-                    handler: async function (response) {
-                        // This executes on SUCCESS
-                        const totalINR = totalAmount / 100;
-                        
-                        lastOrderDetails = {
-                            paymentId: response.razorpay_payment_id,
-                            orderId: response.razorpay_order_id,
-                            userId: userId,
-                            totalAmount: totalINR,
-                            items: purchaseItems,
-                            orderIdDisplay: response.razorpay_order_id || crypto.randomUUID().substring(0, 8).toUpperCase(),
-                            transactionId: response.razorpay_payment_id,
-                            purchaseDate: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }),
-                        };
-
-                        if (db) {
-                            try {
-                                const ordersRef = collection(db, `artifacts/${appId}/public/data/orders`);
-                                await addDoc(ordersRef, { ...lastOrderDetails, timestamp: serverTimestamp() });
-                                showNotification('Payment Successful! Order logged.', 'success');
-                            } catch (error) {
-                                console.error("Failed to record order in Firestore:", error);
-                                showNotification('Payment Successful, but failed to record order.', 'error');
-                            }
-                        } else {
-                            showNotification('Payment Successful!', 'success');
-                        }
-
-                        // Generate and display download links
-                        displayDownloadLinks(purchaseItems);
-                        openModal('success-modal');
-                        cart = [];
-                        updateCartUI();
-                    },
-                    modal: {
-                        ondismiss: function() {
-                            // This runs if the user closes the modal without paying
-                            console.log('Razorpay modal dismissed by user.');
-                            showNotification('Payment cancelled or dismissed.', 'info');
-                        },
-                        backdropclose: true
-                    },
-                    prefill: {
-                        name: "Ajay Birva", 
-                        email: "ajaybirva09@gmail.com",
-                        contact: "7090502895" 
-                    },
-                    theme: { 
-                        color: "#ffcc00",
-                        backdrop_color: "#1a1a1a"
-                    }
-                };
-
-                try {
-                    const rzp = new window.Razorpay(options);
-                    rzp.on('payment.failed', function(response){
-                        // This handles payment failure before the final handler
-                        console.error('Razorpay Payment Failed:', response.error);
-                        showNotification('Payment failed: ' + response.error.description, 'error');
-                    });
-                    rzp.open();
-                } catch (error) {
-                    console.error("Critical error opening Razorpay modal:", error);
-                    showNotification("Payment failed to initialize. Check console for critical errors.", 'error');
-                }
-            };
-
-            // Display Download Links after purchase
-            function displayDownloadLinks(purchasedItems) {
-                const downloadLinksContainer = document.getElementById('download-links-container');
-                if (!downloadLinksContainer) return;
-
-                downloadLinksContainer.innerHTML = '';
-                
-                if (purchasedItems.length === 0) {
-                    downloadLinksContainer.innerHTML = '<p class="text-center text-gray-600">No products purchased.</p>';
-                    return;
-                }
-
-                // Check if Ultimate Bundle is purchased
-                const hasUltimateBundle = purchasedItems.some(item => item.id === 'ub004');
-                
-                if (hasUltimateBundle) {
-                    // If Ultimate Bundle is purchased, show only bundle download
-                    const bundleProduct = products.find(p => p.id === 'ub004');
-                    downloadLinksContainer.innerHTML = `
-                        <div class="download-section bg-gradient-to-br from-dark-text to-gray-900 text-white p-8 rounded-2xl shadow-2xl">
-                            <div class="flex items-center mb-6">
-                                <div class="bg-primary-gold p-3 rounded-full mr-4">
-                                    <i class="fas fa-crown text-2xl text-dark-text"></i>
-                                </div>
-                                <div>
-                                    <h3 class="text-2xl font-bold">Your Ultimate Bundle is Ready!</h3>
-                                    <p class="text-gray-300">Complete access to all our products</p>
-                                </div>
-                            </div>
-                            <div class="bg-white/10 p-6 rounded-xl mb-6 border border-primary-gold/30">
-                                <h4 class="text-xl font-semibold mb-2">🎬 Ultimate Bundle (Everything Included)</h4>
-                                <p class="text-gray-300 mb-4">This ZIP contains all our LUTs, Transitions, and Templates for wedding filmmakers.</p>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                                    <div class="bg-black/30 p-3 rounded-lg text-center">
-                                        <i class="fas fa-palette text-primary-gold text-xl mb-2"></i>
-                                        <p class="text-sm">30+ Cinematic LUTs</p>
-                                    </div>
-                                    <div class="bg-black/30 p-3 rounded-lg text-center">
-                                        <i class="fas fa-film text-primary-gold text-xl mb-2"></i>
-                                        <p class="text-sm">30+ Transitions</p>
-                                    </div>
-                                    <div class="bg-black/30 p-3 rounded-lg text-center">
-                                        <i class="fas fa-layer-group text-primary-gold text-xl mb-2"></i>
-                                        <p class="text-sm">5 Video Templates</p>
-                                    </div>
-                                </div>
-                                <a href="${bundleProduct.downloadUrl}" 
-                                   download="WeddingLutsShop_Ultimate_Bundle.zip"
-                                   class="inline-flex items-center justify-center px-8 py-4 bg-primary-gold text-dark-text font-bold rounded-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-lg w-full md:w-auto">
-                                    <i class="fas fa-download mr-3"></i>
-                                    Download Ultimate Bundle (ZIP - 85MB)
-                                </a>
-                                <p class="text-sm text-gray-400 mt-3">Contains: .CUBE files, .MOGRT files, .AEP templates + Instructions PDF</p>
-                            </div>
-                            <div class="bg-black/30 p-5 rounded-lg">
-                                <h4 class="text-lg font-semibold mb-3"><i class="fas fa-graduation-cap mr-2"></i>Quick Start Guide</h4>
-                                <ol class="text-gray-300 text-sm list-decimal pl-5 space-y-2">
-                                    <li>Extract the ZIP file to a folder on your computer</li>
-                                    <li>For LUTs: Copy .CUBE files to your editing software's LUTs folder</li>
-                                    <li>For Transitions: Import .MOGRT files into Premiere Pro</li>
-                                    <li>For Templates: Open .AEP files in After Effects</li>
-                                    <li>Check the included README.pdf for detailed instructions</li>
-                                </ol>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    // Show individual downloads categorized
-                    let luts = purchasedItems.filter(item => item.category === 'luts');
-                    let transitions = purchasedItems.filter(item => item.category === 'transitions');
-                    let templates = purchasedItems.filter(item => item.category === 'templates');
-                    
-                    let html = `
-                        <div class="download-section bg-gradient-to-br from-dark-text to-gray-900 text-white p-8 rounded-2xl shadow-2xl">
-                            <h3 class="text-2xl font-bold mb-6 text-center">Your Downloads Are Ready!</h3>
-                            <p class="text-gray-300 text-center mb-8">Click to download your purchased products:</p>
-                    `;
-                    
-                    // LUTs Section
-                    if (luts.length > 0) {
-                        html += `
-                            <div class="mb-8">
-                                <h4 class="text-xl font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-palette text-primary-gold mr-3"></i> LUTs Collection
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        `;
-                        luts.forEach(item => {
-                            const product = products.find(p => p.id === item.id);
-                            if (product) {
-                                html += `
-                                    <div class="bg-white/10 p-4 rounded-xl border border-primary-gold/20">
-                                        <div class="flex justify-between items-start mb-3">
-                                            <h5 class="font-semibold">${product.name}</h5>
-                                            <span class="text-xs bg-primary-gold/30 text-primary-gold px-2 py-1 rounded">${item.quantity}x</span>
-                                        </div>
-                                        <a href="${product.downloadUrl}" 
-                                           download="WeddingLutsShop_${product.name.replace(/\s+/g, '_')}.zip"
-                                           class="inline-flex items-center justify-center px-4 py-2 bg-primary-gold/20 text-primary-gold font-semibold rounded-lg hover:bg-primary-gold hover:text-dark-text transition duration-300 w-full">
-                                            <i class="fas fa-download mr-2"></i>
-                                            Download ZIP
-                                        </a>
-                                    </div>
-                                `;
-                            }
-                        });
-                        html += `</div></div>`;
-                    }
-                    
-                    // Transitions Section
-                    if (transitions.length > 0) {
-                        html += `
-                            <div class="mb-8">
-                                <h4 class="text-xl font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-film text-primary-gold mr-3"></i> Video Transitions
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        `;
-                        transitions.forEach(item => {
-                            const product = products.find(p => p.id === item.id);
-                            if (product) {
-                                html += `
-                                    <div class="bg-white/10 p-4 rounded-xl border border-primary-gold/20">
-                                        <div class="flex justify-between items-start mb-3">
-                                            <h5 class="font-semibold">${product.name}</h5>
-                                            <span class="text-xs bg-primary-gold/30 text-primary-gold px-2 py-1 rounded">${item.quantity}x</span>
-                                        </div>
-                                        <a href="${product.downloadUrl}" 
-                                           download="WeddingLutsShop_${product.name.replace(/\s+/g, '_')}.zip"
-                                           class="inline-flex items-center justify-center px-4 py-2 bg-primary-gold/20 text-primary-gold font-semibold rounded-lg hover:bg-primary-gold hover:text-dark-text transition duration-300 w-full">
-                                            <i class="fas fa-download mr-2"></i>
-                                            Download ZIP
-                                        </a>
-                                    </div>
-                                `;
-                            }
-                        });
-                        html += `</div></div>`;
-                    }
-                    
-                    // Templates Section
-                    if (templates.length > 0) {
-                        html += `
-                            <div class="mb-8">
-                                <h4 class="text-xl font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-layer-group text-primary-gold mr-3"></i> Video Templates
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        `;
-                        templates.forEach(item => {
-                            const product = products.find(p => p.id === item.id);
-                            if (product) {
-                                html += `
-                                    <div class="bg-white/10 p-4 rounded-xl border border-primary-gold/20">
-                                        <div class="flex justify-between items-start mb-3">
-                                            <h5 class="font-semibold">${product.name}</h5>
-                                            <span class="text-xs bg-primary-gold/30 text-primary-gold px-2 py-1 rounded">${item.quantity}x</span>
-                                        </div>
-                                        <a href="${product.downloadUrl}" 
-                                           download="WeddingLutsShop_${product.name.replace(/\s+/g, '_')}.zip"
-                                           class="inline-flex items-center justify-center px-4 py-2 bg-primary-gold/20 text-primary-gold font-semibold rounded-lg hover:bg-primary-gold hover:text-dark-text transition duration-300 w-full">
-                                            <i class="fas fa-download mr-2"></i>
-                                            Download ZIP
-                                        </a>
-                                    </div>
-                                `;
-                            }
-                        });
-                        html += `</div></div>`;
-                    }
-                    
-                    // Installation Guide
-                    html += `
-                            <div class="mt-8 p-6 bg-black/40 rounded-xl border-l-4 border-primary-gold">
-                                <h4 class="text-lg font-semibold mb-4 flex items-center">
-                                    <i class="fas fa-book-open text-primary-gold mr-3"></i> Installation Guide
-                                </h4>
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                    <div class="text-center">
-                                        <div class="bg-primary-gold text-dark-text w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                            <i class="fas fa-file-archive"></i>
-                                        </div>
-                                        <h5 class="font-semibold mb-2">Extract Files</h5>
-                                        <p class="text-gray-300 text-sm">Right-click the ZIP file and select "Extract All"</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="bg-primary-gold text-dark-text w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                            <i class="fas fa-folder-open"></i>
-                                        </div>
-                                        <h5 class="font-semibold mb-2">Organize</h5>
-                                        <p class="text-gray-300 text-sm">Create a folder for WeddingLutsShop products</p>
-                                    </div>
-                                    <div class="text-center">
-                                        <div class="bg-primary-gold text-dark-text w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3">
-                                            <i class="fas fa-play-circle"></i>
-                                        </div>
-                                        <h5 class="font-semibold mb-2">Import & Use</h5>
-                                        <p class="text-gray-300 text-sm">Import into your editing software and start creating</p>
-                                    </div>
-                                </div>
-                                <p class="text-center text-gray-400 text-sm mt-6">
-                                    Need help? Email us at <span class="text-primary-gold">support@weddinglutsshop.com</span>
-                                </p>
-                            </div>
-                        </div>
-                    `;
-                    
-                    downloadLinksContainer.innerHTML = html;
-                }
-            }
-
-            // --- Invoice Generation Function ---
-            window.viewInvoice = () => {
-                if (!lastOrderDetails) {
-                    showNotification('No recent order found to generate an invoice.', 'error');
-                    return;
-                }
-                const invoiceHtml = generateInvoiceHtml(lastOrderDetails);
-                const invoiceWindow = window.open('', '_blank');
-                invoiceWindow.document.write(invoiceHtml);
-                invoiceWindow.document.close();
-                setTimeout(() => { invoiceWindow.print(); }, 500);
-            };
-
-            const generateInvoiceHtml = (order) => {
-                const itemsHtml = order.items.map(item => `
-                    <tr class="border-b border-gray-200">
-                        <td class="py-3 px-6 text-left">${item.name}</td>
-                        <td class="py-3 px-6 text-center">${item.quantity}</td>
-                        <td class="py-3 px-6 text-right">₹${item.price.toLocaleString('en-IN')}</td>
-                        <td class="py-3 px-6 text-right font-semibold">₹${(item.price * item.quantity).toLocaleString('en-IN')}</td>
-                    </tr>
-                `).join('');
-
-                return `
-                    <!DOCTYPE html>
-                    <html lang="en">
-                    <head>
-                        <title>Tax Invoice #${order.orderIdDisplay}</title>
-                        <style>
-                            body { font-family: 'Inter', sans-serif; background: #ffffff; color: #1a1a1a; margin: 0; padding: 20px; -webkit-print-color-adjust: exact; print-color-adjust: exact;}
-                            .invoice-container { max-width: 800px; margin: 0 auto; padding: 30px; border: 1px solid #e0e0e0; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-                            .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #ffcc00; padding-bottom: 20px; margin-bottom: 30px; }
-                            .title { color: #1a1a1a; font-size: 32px; font-weight: bold; margin: 0; }
-                            .title span { color: #ffcc00; }
-                            .info-box { margin-bottom: 20px; padding: 10px; background: #fffdf5; border: 1px solid #ffcc0033; border-radius: 4px; }
-                            .info-box p { margin: 5px 0; font-size: 14px; }
-                            table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-                            .table-header { background-color: #ffcc00; color: #1a1a1a; font-weight: bold; }
-                            th, td { padding: 12px 15px; text-align: left; }
-                            th { text-align: right; }
-                            td:nth-child(1) { text-align: left; }
-                            td:nth-child(2) { text-align: center; }
-                            td:nth-child(3), td:nth-child(4) { text-align: right; }
-                            .total-row { background-color: #fcf6e0; border-top: 3px solid #ffcc00; }
-                            .total-row td { font-size: 18px; font-weight: bold; color: #1a1a1a; }
-                            .footer { text-align: center; margin-top: 40px; font-size: 12px; color: #666; }
-                        </style>
-                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-                    </head>
-                    <body>
-                        <div class="invoice-container">
-                            <div class="header">
-                                <div>
-                                    <h1 class="title"><span>Wedding</span>LUTsShop</h1>
-                                    <p style="font-size: 14px; margin-top: 5px;">Digital LUTs Store, India | GSTIN: XXXXXXXXXXXX</p>
-                                </div>
-                                <div style="text-align: right;">
-                                    <p style="font-size: 24px; font-weight: bold; color: #1a1a1a;">TAX INVOICE</p>
-                                    <p># ${order.orderIdDisplay}</p>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; justify-content: space-between;">
-                                <div class="info-box" style="width: 48%;">
-                                    <p><strong>Billed To:</strong> Ajay Birva</p>
-                                    <p><strong>Email:</strong> ajaybirva09@gmail.com</p>
-                                    <p><strong>User ID:</strong> ${order.userId}</p>
-                                </div>
-                                <div class="info-box" style="width: 48%;">
-                                    <p><strong>Date:</strong> ${order.purchaseDate}</p>
-                                    <p><strong>Payment ID:</strong> ${order.transactionId}</p>
-                                    <p><strong>Payment Method:</strong> Razorpay (Online)</p>
-                                </div>
-                            </div>
-
-                            <table>
-                                <thead>
-                                    <tr class="table-header">
-                                        <th style="text-align: left;">Product</th>
-                                        <th style="text-align: center;">Qty</th>
-                                        <th style="text-align: right;">Unit Price (INR)</th>
-                                        <th style="text-align: right;">Amount (INR)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${itemsHtml}
-                                    <tr class="total-row" style="background-color: #e6e6e6; border-top: 1px solid #ffcc00;">
-                                        <td colspan="3" style="text-align: right; font-weight: normal;">Taxable Value:</td>
-                                        <td style="font-weight: normal;">₹${(order.totalAmount / 1.18).toFixed(2).toLocaleString('en-IN')}</td>
-                                    </tr>
-                                    <tr class="total-row" style="background-color: #e6e6e6; border-top: none;">
-                                        <td colspan="3" style="text-align: right; font-weight: normal;">GST (18%):</td>
-                                        <td style="font-weight: normal;">₹${(order.totalAmount - (order.totalAmount / 1.18)).toFixed(2).toLocaleString('en-IN')}</td>
-                                    </tr>
-                                    <tr class="total-row">
-                                        <td colspan="3" style="text-align: right;">**TOTAL PAID:**</td>
-                                        <td>₹${order.totalAmount.toLocaleString('en-IN')}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <div class="footer">
-                                <p>Thank you for your purchase! All digital products are delivered instantly.</p>
-                                <p>This is an electronically generated document and requires no signature.</p>
-                            </div>
-                        </div>
-                    </body>
-                    </html>
-                `;
-            };
-
-            // --- Before/After Slider Initialization (with REAL difference) ---
-            function initializeBeforeAfterSlider() {
-                const container = document.querySelector('.before-after-container');
-                if (!container) return;
-                
-                const afterImg = container.querySelector('.after-img');
-                const handle = container.querySelector('.slider-handle');
-
-                let isDragging = false;
-
-                const updateClip = (x, container) => {
-                    const rect = container.getBoundingClientRect();
-                    let position = (x - rect.left) / rect.width;
-                    position = Math.max(0, Math.min(1, position));
-                    const clipPathValue = `inset(0 0 0 ${position * 100}%)`;
-                    const handleLeft = `${position * 100}%`;
-                    afterImg.style.clipPath = clipPathValue;
-                    handle.style.left = handleLeft;
-                };
-
-                const startDrag = (e) => { 
-                    isDragging = true; 
-                    e.preventDefault(); 
-                    container.style.cursor = 'grabbing';
-                };
-                const stopDrag = () => { 
-                    isDragging = false; 
-                    container.style.cursor = 'ew-resize';
-                };
-                const onMove = (e) => {
-                    if (!isDragging) return;
-                    let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                    updateClip(clientX, container);
-                };
-
-                container.addEventListener('mousedown', startDrag);
-                window.addEventListener('mouseup', stopDrag);
-                window.addEventListener('mousemove', onMove);
-                container.addEventListener('touchstart', startDrag);
-                window.addEventListener('touchend', stopDrag);
-                container.addEventListener('touchmove', onMove);
-
-                // Set initial position
-                updateClip(container.getBoundingClientRect().left + container.offsetWidth / 2, container);
-                
-                // Auto animate slider on page load
-                setTimeout(() => {
-                    let pos = 0.5;
-                    const animate = () => {
-                        pos += 0.01;
-                        if (pos > 0.8) return;
-                        updateClip(container.getBoundingClientRect().left + container.offsetWidth * pos, container);
-                        requestAnimationFrame(animate);
-                    };
-                    animate();
-                }, 1000);
-            }
-            
-            // Initialize slider when page loads
-            setTimeout(initializeBeforeAfterSlider, 500);
-            
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Active nav link highlighting
-            window.addEventListener('scroll', () => {
-                const sections = document.querySelectorAll('section[id]');
-                const scrollPos = window.scrollY + 100;
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    const sectionId = section.getAttribute('id');
-                    
-                    if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-                        document.querySelectorAll('.nav-link').forEach(link => {
-                            link.classList.remove('active');
-                            if (link.getAttribute('href') === `#${sectionId}`) {
-                                link.classList.add('active');
-                            }
-                        });
-                    }
-                });
-            });
-            
-            // Contact form submission
-            document.querySelector('form')?.addEventListener('submit', (e) => {
-                e.preventDefault();
-                showNotification('Message sent! We\'ll get back to you soon.', 'success');
-                e.target.reset();
-            });
-        });
-
-    </script>
-
-    <!-- Razorpay SDK Script -->
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-    <!-- App Notification Container -->
-    <div id="app-notification" class="hidden fixed bottom-5 right-5 z-50 p-4 rounded-lg text-white font-semibold shadow-2xl transition-all duration-300 bg-blue-500">
-        Notification Message
+    <!-- Notification System -->
+    <div id="notification" class="notification bg-green-500 text-white p-4 rounded-lg shadow-xl max-w-sm hidden">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-3"></i>
+            <span id="notification-message">Notification</span>
+        </div>
     </div>
 
-    <!-- Header & Navigation (No Print) -->
-    <header class="sticky top-0 z-40 bg-primary-white shadow-xl no-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center border-b-2 border-primary-gold">
-            <!-- Logo/Title: Updated text logo -->
-            <a href="#home" class="text-2xl font-black tracking-widest text-dark-text uppercase flex items-center">
-                <span class="inline-block h-6 w-6 mr-2 bg-dark-text rounded-full relative overflow-hidden">
-                    <span class="absolute h-3 w-3 bg-primary-gold rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
-                </span>
-                <span class="text-primary-gold">Wedding</span>LUTsShop
-            </a>
+    <!-- Header with Auth Buttons -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-lg border-b border-primary-gold/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 bg-dark-text rounded-lg flex items-center justify-center">
+                        <i class="fas fa-film text-primary-gold text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-black">
+                        <span class="text-primary-gold">Wedding</span>LUTs
+                    </span>
+                </a>
 
-            <!-- Desktop Nav -->
-            <nav class="hidden md:flex space-x-8 text-sm">
-                <a href="#shop" class="nav-link text-dark-text font-semibold hover:text-primary-gold transition duration-200">Shop All</a>
-                <a href="#samples" class="nav-link text-dark-text hover:text-primary-gold transition duration-200">Free Samples</a>
-                <a href="#transitions" class="nav-link text-dark-text hover:text-primary-gold transition duration-200">Transitions</a>
-                <a href="#templates" class="nav-link text-dark-text hover:text-primary-gold transition duration-200">Templates</a>
-                <a href="#about" class="nav-link text-dark-text hover:text-primary-gold transition duration-200">About</a>
-                <a href="#faq" class="nav-link text-dark-text hover:text-primary-gold transition duration-200">FAQ</a>
-            </nav>
-
-            <!-- Cart Icon -->
-            <div class="flex items-center space-x-4">
-                <button onclick="openModal('cart-modal')" class="relative p-2 rounded-full hover:bg-secondary-light-gray transition">
-                    <i class="fas fa-shopping-cart text-primary-gold text-xl"></i>
-                    <span id="cart-badge" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-dark-text transform translate-x-1/2 -translate-y-1/2 bg-primary-gold rounded-full">0</span>
-                </button>
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-dark-text hover:text-primary-gold font-medium transition">Home</a>
+                    <a href="#shop" class="text-dark-text hover:text-primary-gold font-medium transition">Shop</a>
+                    <a href="#ai-tools" class="text-dark-text hover:text-ai-blue font-medium transition">AI Tools</a>
+                    <a href="#templates" class="text-dark-text hover:text-premium-purple font-medium transition">Templates</a>
+                    <a href="#before-after" class="text-dark-text hover:text-primary-gold font-medium transition">Before/After</a>
+                    <a href="#pricing" class="text-dark-text hover:text-primary-gold font-medium transition">Pricing</a>
+                    
+                    <!-- Auth Buttons -->
+                    <div class="flex items-center space-x-4">
+                        <button onclick="openModal('auth-modal')" 
+                                class="px-4 py-2 bg-dark-text text-white rounded-lg hover:bg-gray-800 transition font-medium">
+                            <i class="fas fa-user mr-2"></i>Sign In
+                        </button>
+                        <button onclick="openModal('auth-modal')" 
+                                class="px-4 py-2 bg-primary-gold text-dark-text rounded-lg hover:bg-yellow-600 transition font-bold">
+                            <i class="fas fa-user-plus mr-2"></i>Sign Up
+                        </button>
+                    </div>
+                    
+                    <!-- Cart -->
+                    <button onclick="openModal('cart-modal')" class="relative">
+                        <i class="fas fa-shopping-cart text-2xl text-primary-gold"></i>
+                        <span id="cart-badge" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </nav>
 
                 <!-- Mobile Menu Button -->
-                <button onclick="openModal('mobile-nav-modal')" class="md:hidden p-2 rounded-full hover:bg-secondary-light-gray transition">
-                    <i class="fas fa-bars text-dark-text text-xl"></i>
+                <button onclick="openModal('mobile-menu')" class="md:hidden text-2xl">
+                    <i class="fas fa-bars"></i>
                 </button>
             </div>
         </div>
     </header>
 
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden auth-modal">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md mx-4 p-8 transform transition-all duration-300 scale-95">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Welcome Back</h2>
+                <button onclick="closeModal('auth-modal')" class="text-2xl hover:text-primary-gold">&times;</button>
+            </div>
+            
+            <!-- Tabs -->
+            <div class="flex mb-6 bg-gray-100 p-1 rounded-lg">
+                <button id="login-tab" class="flex-1 py-2 rounded-lg auth-tab active" onclick="switchAuthTab('login')">
+                    Sign In
+                </button>
+                <button id="register-tab" class="flex-1 py-2 rounded-lg auth-tab" onclick="switchAuthTab('register')">
+                    Sign Up
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <div id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="login-email" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="login-password" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="••••••••">
+                </div>
+                <button onclick="loginUser()" 
+                        class="w-full bg-primary-gold text-dark-text py-3 rounded-lg font-bold hover:bg-yellow-600 transition">
+                    Sign In
+                </button>
+                
+                <div class="text-center my-4">OR</div>
+                
+                <!-- Social Login -->
+                <button onclick="socialLogin('google')" 
+                        class="w-full bg-white border border-gray-300 py-3 rounded-lg hover:bg-gray-50 transition flex items-center justify-center">
+                    <i class="fab fa-google text-red-500 mr-3"></i>
+                    Continue with Google
+                </button>
+                
+                <button onclick="socialLogin('facebook')" 
+                        class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center mt-2">
+                    <i class="fab fa-facebook mr-3"></i>
+                    Continue with Facebook
+                </button>
+            </div>
+            
+            <!-- Register Form -->
+            <div id="register-form" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Full Name</label>
+                    <input type="text" id="register-name" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="John Doe">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="register-email" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="register-password" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="••••••••">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Confirm Password</label>
+                    <input type="password" id="register-confirm" 
+                           class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-primary-gold focus:border-transparent"
+                           placeholder="••••••••">
+                </div>
+                <button onclick="registerUser()" 
+                        class="w-full bg-primary-gold text-dark-text py-3 rounded-lg font-bold hover:bg-yellow-600 transition">
+                    Create Account
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
     <main>
-        <!-- 1. Hero Section -->
-        <section id="home" class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-32 bg-primary-white text-center">
-            <!-- Background Video -->
-            <div class="absolute inset-0 overflow-hidden">
-                <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20">
-                    <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-at-a-wedding-reception-4457-large.mp4" type="video/mp4">
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-b from-primary-white/90 via-primary-white/70 to-primary-white"></div>
-            </div>
-
-            <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fadeInUp">
-                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold text-dark-text tracking-tight uppercase">
-                    The <span class="gradient-text">Golden Look</span> for Your Films
-                </h1>
-                <p class="mt-4 text-lg sm:text-xl text-dark-text/70 max-w-3xl mx-auto">
-                    Premium Cinematic LUTs, Video Templates & Transitions tailored for wedding filmmakers. Transform your videos instantly.
-                </p>
-                <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#shop" class="pulse-btn inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg shadow-xl text-dark-text bg-primary-gold hover:bg-yellow-600 transition duration-300 transform hover:scale-105">
-                        <i class="fas fa-shopping-bag mr-2"></i> Shop Products
-                    </a>
-                    <a href="#samples" class="inline-flex items-center justify-center px-8 py-3 border border-dark-text text-base font-medium rounded-lg shadow-lg text-dark-text bg-transparent hover:bg-dark-text hover:text-primary-white transition duration-300">
-                        <i class="fas fa-download mr-2"></i> Try Free Samples
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. Before/After Slider Section with REAL Difference -->
-        <section class="py-16 md:py-24 bg-secondary-light-gray" id="slider-demo">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-3xl font-bold text-center text-dark-text mb-4">See the Transformation</h2>
-                <p class="text-center text-dark-text/60 mb-12 max-w-2xl mx-auto">Drag the slider to compare our color grading magic</p>
-                <div class="before-after-container">
-                    <!-- BEFORE: Flat/Log Wedding Footage -->
-                    <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                         class="before-after-img object-center"
-                         alt="Before applying Cinematic LUTs - Flat wedding footage">
-                    <!-- AFTER: Graded with Wedding Gold LUT -->
-                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-                         class="before-after-img after-img object-center"
-                         alt="After applying Cinematic LUTs - Warm golden graded look">
-                    <div class="slider-handle"></div>
-                    <div class="absolute top-4 left-4 z-20">
-                        <span class="text-dark-text bg-primary-white/90 px-4 py-2 text-sm font-bold rounded-full shadow flex items-center">
-                            <i class="fas fa-image mr-2"></i> BEFORE - Flat Footage
-                        </span>
+        <!-- Hero Section -->
+        <section id="home" class="pt-20 pb-32 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary-gold/10 via-transparent to-premium-purple/10"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="animate-fadeInUp">
+                        <h1 class="text-5xl md:text-7xl font-black mb-6">
+                            <span class="gradient-text">Transform</span><br>
+                            <span class="text-dark-text">Your Wedding</span><br>
+                            <span class="gradient-text-purple">Videos with AI</span>
+                        </h1>
+                        <p class="text-xl text-gray-600 mb-8">
+                            Professional LUTs, video templates, transitions, and AI-powered tools for wedding filmmakers. 
+                            Create cinematic masterpieces in minutes.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#shop" 
+                               class="px-8 py-3 bg-primary-gold text-dark-text font-bold rounded-lg hover:bg-yellow-600 transition transform hover:scale-105 shadow-xl">
+                                Shop Now
+                            </a>
+                            <a href="#ai-tools" 
+                               class="px-8 py-3 bg-ai-blue text-white font-bold rounded-lg hover:bg-blue-700 transition transform hover:scale-105 shadow-xl">
+                                Try AI Tools
+                            </a>
+                        </div>
                     </div>
-                    <div class="absolute top-4 right-4 z-20">
-                        <span class="text-dark-text bg-primary-gold/90 px-4 py-2 text-sm font-bold rounded-full shadow flex items-center">
-                            <i class="fas fa-magic mr-2"></i> AFTER - Wedding Gold LUT
-                        </span>
-                    </div>
-                </div>
-                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div class="p-4 bg-white rounded-lg shadow">
-                        <i class="fas fa-thermometer-empty text-2xl text-primary-gold mb-2"></i>
-                        <h4 class="font-bold text-dark-text">Flat LOG Footage</h4>
-                        <p class="text-dark-text/70 text-sm">Low contrast, desaturated look straight from camera</p>
-                    </div>
-                    <div class="p-4 bg-white rounded-lg shadow">
-                        <i class="fas fa-sliders-h text-2xl text-primary-gold mb-2"></i>
-                        <h4 class="font-bold text-dark-text">One-Click Apply</h4>
-                        <p class="text-dark-text/70 text-sm">Apply our LUTs with a single click in your editor</p>
-                    </div>
-                    <div class="p-4 bg-white rounded-lg shadow">
-                        <i class="fas fa-crown text-2xl text-primary-gold mb-2"></i>
-                        <h4 class="font-bold text-dark-text">Cinematic Result</h4>
-                        <p class="text-dark-text/70 text-sm">Professional Hollywood-grade color in seconds</p>
+                    <div class="relative">
+                        <div class="ai-video-container p-1">
+                            <video id="hero-video" class="w-full h-64 md:h-96 object-cover rounded-lg" autoplay muted loop>
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-4457-large.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute bottom-4 left-4 bg-black/70 text-white p-2 rounded-lg">
+                                <i class="fas fa-magic text-primary-gold mr-2"></i>
+                                AI Enhanced in Real-time
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 3. Free Samples Section -->
-        <section id="samples" class="py-16 md:py-24 bg-primary-white">
+        <!-- AI Video Tools Section -->
+        <section id="ai-tools" class="py-20 bg-gradient-to-b from-white to-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12">
-                    <span class="inline-block px-4 py-1 bg-primary-gold/20 text-primary-gold rounded-full text-sm font-semibold mb-4">
-                        <i class="fas fa-gift mr-1"></i> FREE SAMPLES
+                    <span class="inline-block px-4 py-1 bg-ai-blue/20 text-ai-blue rounded-full text-sm font-bold mb-4">
+                        <i class="fas fa-robot mr-2"></i>AI POWERED
                     </span>
-                    <h2 class="text-4xl font-extrabold text-dark-text mb-4">Try Before You Buy</h2>
-                    <p class="text-dark-text/70 max-w-2xl mx-auto">
-                        Download our free sample LUTs to test the quality. Each sample is a fully functional .CUBE file.
-                    </p>
-                </div>
-                
-                <div id="sample-luts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
-                    <!-- Sample LUT cards will be dynamically inserted here -->
-                </div>
-                
-                <!-- Alternative download alert -->
-                <div id="sample-alert" class="hidden mt-6 p-4 bg-yellow-50 border-l-4 border-yellow-500 rounded">
-                    <div class="flex">
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-info-circle text-yellow-500 text-xl"></i>
-                        </div>
-                        <div class="ml-3">
-                            <p class="text-sm text-yellow-700">
-                                If the download doesn't start automatically, <a href="https://drive.google.com/drive/folders/1FjQj-XYZ-EXAMPLE?usp=sharing" class="font-semibold underline">click here to access all sample files</a>.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-12 p-8 bg-gradient-to-r from-primary-gold/10 via-primary-white to-primary-gold/10 rounded-2xl border border-primary-gold/30">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div>
-                            <h3 class="text-2xl font-bold text-dark-text mb-4">How to Use Sample LUTs</h3>
-                            <ol class="space-y-3">
-                                <li class="flex items-start">
-                                    <span class="bg-dark-text text-primary-gold w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">1</span>
-                                    <span class="text-dark-text/80">Download the .CUBE file by clicking "Try Sample"</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-dark-text text-primary-gold w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">2</span>
-                                    <span class="text-dark-text/80">Place in your editing software's LUTs folder</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-dark-text text-primary-gold w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">3</span>
-                                    <span class="text-dark-text/80">Apply to your footage and adjust intensity (50-100%)</span>
-                                </li>
-                                <li class="flex items-start">
-                                    <span class="bg-dark-text text-primary-gold w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold mr-3 mt-1">4</span>
-                                    <span class="text-dark-text/80">Fine-tune exposure and white balance if needed</span>
-                                </li>
-                            </ol>
-                        </div>
-                        <div class="bg-dark-text rounded-xl p-6 text-white">
-                            <h4 class="text-xl font-bold mb-4">Supported Software</h4>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="flex items-center">
-                                    <i class="fab fa-adobe text-red-500 text-2xl mr-3"></i>
-                                    <span>Premiere Pro</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-film text-blue-500 text-2xl mr-3"></i>
-                                    <span>DaVinci Resolve</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fab fa-apple text-gray-300 text-2xl mr-3"></i>
-                                    <span>Final Cut Pro</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-video text-green-500 text-2xl mr-3"></i>
-                                    <span>Filmora</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. Video Transitions Section -->
-        <section id="transitions" class="py-16 md:py-24 bg-secondary-light-gray">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <span class="inline-block px-4 py-1 bg-primary-gold/20 text-primary-gold rounded-full text-sm font-semibold mb-4">
-                        <i class="fas fa-film mr-1"></i> PREMIUM TRANSITIONS
-                    </span>
-                    <h2 class="text-4xl font-extrabold text-dark-text mb-4">Cinematic Video Transitions</h2>
-                    <p class="text-dark-text/70 max-w-2xl mx-auto">
-                        Elevate your wedding films with our collection of 30+ premium transitions. Compatible with Premiere Pro, After Effects, and Final Cut Pro.
-                    </p>
+                    <h2 class="text-4xl font-black mb-4">AI Video Generation Tools</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Transform your raw footage into cinematic masterpieces with our AI tools</p>
                 </div>
 
-                <!-- Video Demo of Transitions -->
-                <div class="video-container mb-12">
-                    <iframe src="https://www.youtube.com/embed/5Gf1tY8DJh4?controls=1&modestbranding=1&rel=0" 
-                            title="Wedding Video Transitions Demo" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
-                </div>
-
-                <!-- Transition Features -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <div class="transition-card bg-white rounded-xl shadow-xl overflow-hidden">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1492684223066-e9e5a0c4c0a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Film Burn Transition" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                            <span class="absolute top-4 right-4 bg-primary-gold text-dark-text px-3 py-1 rounded-full text-xs font-bold">HOT</span>
+                <div class="grid md:grid-cols-2 gap-8 mb-16">
+                    <!-- AI Video Enhancer -->
+                    <div class="ai-video-container p-6">
+                        <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                            <i class="fas fa-wand-magic-sparkles text-primary-gold mr-3"></i>
+                            AI Video Enhancer
+                        </h3>
+                        <div class="video-comparison mb-4">
+                            <video id="ai-before" class="w-full h-64 object-cover" controls>
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-at-a-wedding-reception-4457-large.mp4" type="video/mp4">
+                            </video>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-dark-text mb-2">Film Burn Transitions</h3>
-                            <p class="text-dark-text/70 mb-4">Vintage film burn effects for cinematic wedding openings</p>
-                            <div class="flex items-center text-sm text-dark-text/60 mb-4">
-                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span>10 Film Burn Effects</span>
-                            </div>
-                            <button onclick="addToCart('vt005')" class="w-full bg-dark-text text-primary-gold py-3 rounded-lg font-semibold hover:bg-dark-text/90 transition duration-300">
-                                Add to Cart - ₹2499
+                        <div class="flex items-center space-x-4 mb-4">
+                            <button onclick="startAIEnhancement()" 
+                                    class="flex-1 bg-ai-blue text-white py-2 rounded-lg hover:bg-blue-700 transition flex items-center justify-center">
+                                <i class="fas fa-play mr-2"></i>Enhance with AI
+                            </button>
+                            <button onclick="downloadAIResult()" 
+                                    class="px-4 py-2 border border-primary-gold text-primary-gold rounded-lg hover:bg-primary-gold hover:text-dark-text transition">
+                                <i class="fas fa-download"></i>
                             </button>
                         </div>
-                        <div class="overlay">
-                            <h4 class="font-bold text-lg mb-2">Preview Features</h4>
-                            <ul class="text-sm text-white/90 space-y-1">
-                                <li>• 4K Resolution</li>
-                                <li>• Easy Color Customization</li>
-                                <li>• No Plugins Required</li>
-                            </ul>
+                        <div class="ai-loader hidden" id="ai-loader">
+                            <div class="text-center text-white mb-2">
+                                <i class="fas fa-cog ai-processing text-2xl mb-2"></i>
+                                <p>AI is processing your video...</p>
+                            </div>
+                            <div class="w-full bg-gray-700 rounded-full h-2">
+                                <div id="ai-progress" class="ai-progress h-2 rounded-full"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="transition-card bg-white rounded-xl shadow-xl overflow-hidden">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Light Leak Transitions" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-dark-text mb-2">Light Leak Transitions</h3>
-                            <p class="text-dark-text/70 mb-4">Organic light leak effects for romantic wedding scenes</p>
-                            <div class="flex items-center text-sm text-dark-text/60 mb-4">
-                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span>8 Light Leak Effects</span>
-                            </div>
-                            <button onclick="addToCart('vt005')" class="w-full bg-dark-text text-primary-gold py-3 rounded-lg font-semibold hover:bg-dark-text/90 transition duration-300">
-                                Included in Pack
-                            </button>
-                        </div>
-                        <div class="overlay">
-                            <h4 class="font-bold text-lg mb-2">Preview Features</h4>
-                            <ul class="text-sm text-white/90 space-y-1">
-                                <li>• Organic Light Effects</li>
-                                <li>• Blend Modes Included</li>
-                                <li>• Royalty Free</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="transition-card bg-white rounded-xl shadow-xl overflow-hidden">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Textured Transitions" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                            <span class="absolute top-4 right-4 bg-primary-gold text-dark-text px-3 py-1 rounded-full text-xs font-bold">NEW</span>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-dark-text mb-2">Textured Transitions</h3>
-                            <p class="text-dark-text/70 mb-4">Grain, dust, and texture overlays for vintage wedding films</p>
-                            <div class="flex items-center text-sm text-dark-text/60 mb-4">
-                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
-                                <span>12 Texture Effects</span>
-                            </div>
-                            <button onclick="addToCart('vt005')" class="w-full bg-dark-text text-primary-gold py-3 rounded-lg font-semibold hover:bg-dark-text/90 transition duration-300">
-                                Included in Pack
-                            </button>
-                        </div>
-                        <div class="overlay">
-                            <h4 class="font-bold text-lg mb-2">Preview Features</h4>
-                            <ul class="text-sm text-white/90 space-y-1">
-                                <li>• 35mm Film Grain</li>
-                                <li>• Dust & Scratch Overlays</li>
-                                <li>• Adjustable Intensity</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Transition Details -->
-                <div class="mt-12 bg-white rounded-2xl p-8 shadow-lg">
-                    <h3 class="text-2xl font-bold text-dark-text mb-6 text-center">What's Included in the Transitions Pack</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div class="text-center p-4">
-                            <div class="bg-primary-gold/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-hdd text-primary-gold text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold text-dark-text">30+ Transitions</h4>
-                            <p class="text-dark-text/70 text-sm">Film burns, light leaks, textures & more</p>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="bg-primary-gold/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-expand-arrows-alt text-primary-gold text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold text-dark-text">4K Resolution</h4>
-                            <p class="text-dark-text/70 text-sm">Ultra HD quality for professional work</p>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="bg-primary-gold/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fab fa-adobe text-primary-gold text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold text-dark-text">Multi Software</h4>
-                            <p class="text-dark-text/70 text-sm">Works in Premiere, After Effects, FCPX</p>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="bg-primary-gold/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <i class="fas fa-sync-alt text-primary-gold text-2xl"></i>
-                            </div>
-                            <h4 class="font-bold text-dark-text">Easy Customization</h4>
-                            <p class="text-dark-text/70 text-sm">Change colors, speed, and timing easily</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. Video Templates Section -->
-        <section id="templates" class="py-16 md:py-24 bg-primary-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12">
-                    <span class="inline-block px-4 py-1 bg-primary-gold/20 text-primary-gold rounded-full text-sm font-semibold mb-4">
-                        <i class="fas fa-layer-group mr-1"></i> VIDEO TEMPLATES
-                    </span>
-                    <h2 class="text-4xl font-extrabold text-dark-text mb-4">Complete Wedding Video Templates</h2>
-                    <p class="text-dark-text/70 max-w-2xl mx-auto">
-                        Save hours of editing with our professionally designed wedding video templates. Just drop in your footage and render.
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-12">
-                    <div>
-                        <h3 class="text-3xl font-bold text-dark-text mb-6">Create Stunning Wedding Films in Minutes</h3>
-                        <ul class="space-y-4">
-                            <li class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text rounded-full p-2 mr-4">
-                                    <i class="fas fa-play-circle"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text">Opening Sequences</h4>
-                                    <p class="text-dark-text/70">Cinematic opening templates with titles and animations</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text rounded-full p-2 mr-4">
-                                    <i class="fas fa-heart"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text">Love Story Sections</h4>
-                                    <p class="text-dark-text/70">Templates for couple's story, dating history, and proposal</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text rounded-full p-2 mr-4">
-                                    <i class="fas fa-ring"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text">Ceremony Highlights</h4>
-                                    <p class="text-dark-text/70">Vows, ring exchange, and ceremony moment templates</p>
-                                </div>
-                            </li>
-                            <li class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text rounded-full p-2 mr-4">
-                                    <i class="fas fa-glass-cheers"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text">Reception Templates</h4>
-                                    <p class="text-dark-text/70">Speeches, first dance, cake cutting, and guest moments</p>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="mt-8">
-                            <button onclick="addToCart('tp006')" class="px-8 py-3 bg-primary-gold text-dark-text font-bold rounded-lg hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-lg">
-                                Get Templates - ₹3299
-                            </button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="bg-dark-text rounded-2xl p-6 text-white">
-                            <h4 class="text-xl font-bold mb-4 flex items-center">
-                                <i class="fas fa-star text-primary-gold mr-2"></i> Template Features
-                            </h4>
-                            <div class="space-y-4">
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>5 Complete Wedding Templates</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>Easy Text & Color Customization</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>Placeholder Media Included</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>4K & HD Resolution Options</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>Works with Premiere Pro & After Effects</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-check-circle text-green-400 mr-3"></i>
-                                    <span>Step-by-Step Video Tutorials</span>
-                                </div>
-                            </div>
-                            <div class="mt-8 p-4 bg-white/10 rounded-lg">
-                                <p class="text-sm text-gray-300">
-                                    <i class="fas fa-clock text-primary-gold mr-2"></i>
-                                    <strong>Time Saver:</strong> Complete a 5-minute wedding video in under 1 hour instead of 8+ hours.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Template Preview Gallery -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-                    <div class="border border-secondary-light-gray rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Modern Minimal Template" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4">
-                                <span class="bg-white text-dark-text px-3 py-1 rounded-full text-xs font-bold">MODERN</span>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-dark-text">Modern Minimal</h4>
-                            <p class="text-dark-text/70 text-sm mt-2">Clean, contemporary design with smooth animations</p>
-                        </div>
-                    </div>
-                    <div class="border border-secondary-light-gray rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Vintage Romantic Template" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4">
-                                <span class="bg-white text-dark-text px-3 py-1 rounded-full text-xs font-bold">VINTAGE</span>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-dark-text">Vintage Romantic</h4>
-                            <p class="text-dark-text/70 text-sm mt-2">Classic film look with retro elements</p>
-                        </div>
-                    </div>
-                    <div class="border border-secondary-light-gray rounded-xl overflow-hidden shadow-lg">
-                        <div class="relative h-48 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" 
-                                 alt="Luxury Cinematic Template" 
-                                 class="w-full h-full object-cover">
-                            <div class="absolute top-4 left-4">
-                                <span class="bg-white text-dark-text px-3 py-1 rounded-full text-xs font-bold">LUXURY</span>
-                            </div>
-                        </div>
-                        <div class="p-4">
-                            <h4 class="font-bold text-dark-text">Luxury Cinematic</h4>
-                            <p class="text-dark-text/70 text-sm mt-2">High-end cinematic feel with gold elements</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. Shop/Product Listing Section -->
-        <section id="shop" class="py-16 md:py-24 bg-secondary-light-gray">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-extrabold text-dark-text text-center mb-4">Complete Shop Collection</h2>
-                <p class="text-center text-dark-text/60 mb-12 max-w-2xl mx-auto">Everything you need for professional wedding filmmaking in one place</p>
-
-                <!-- Filter Tabs -->
-                <div class="flex flex-wrap justify-center gap-2 mb-12">
-                    <button class="filter-btn active px-4 py-2 bg-primary-gold text-dark-text font-semibold rounded-lg" data-filter="all">All Products</button>
-                    <button class="filter-btn px-4 py-2 bg-white text-dark-text font-semibold rounded-lg hover:bg-primary-gold" data-filter="luts">LUTs</button>
-                    <button class="filter-btn px-4 py-2 bg-white text-dark-text font-semibold rounded-lg hover:bg-primary-gold" data-filter="transitions">Transitions</button>
-                    <button class="filter-btn px-4 py-2 bg-white text-dark-text font-semibold rounded-lg hover:bg-primary-gold" data-filter="templates">Templates</button>
-                    <button class="filter-btn px-4 py-2 bg-white text-dark-text font-semibold rounded-lg hover:bg-primary-gold" data-filter="bundle">Bundles</button>
-                </div>
-
-                <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-                    <!-- Products will be filtered here -->
-                </div>
-            </div>
-        </section>
-
-        <!-- 7. About Section -->
-        <section id="about" class="py-16 md:py-24 bg-primary-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl font-extrabold text-dark-text mb-6">Our Commitment to Filmmakers</h2>
-                <p class="text-dark-text/80 max-w-3xl mx-auto mb-8">
-                    WeddingLutsShop was founded by professional wedding cinematographers who understand the demanding workflow of modern video production. 
-                    Our products are crafted to save you hours in post-production while delivering Hollywood-grade results.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                    <div class="p-6 bg-secondary-light-gray rounded-xl">
-                        <i class="fas fa-award text-4xl text-primary-gold mb-4"></i>
-                        <h4 class="font-bold text-dark-text text-xl mb-2">Professional Quality</h4>
-                        <p class="text-dark-text/70">Used by 1000+ wedding filmmakers worldwide</p>
-                    </div>
-                    <div class="p-6 bg-secondary-light-gray rounded-xl">
-                        <i class="fas fa-clock text-4xl text-primary-gold mb-4"></i>
-                        <h4 class="font-bold text-dark-text text-xl mb-2">Time Saving</h4>
-                        <p class="text-dark-text/70">Cut editing time by 70% with our templates</p>
-                    </div>
-                    <div class="p-6 bg-secondary-light-gray rounded-xl">
-                        <i class="fas fa-headset text-4xl text-primary-gold mb-4"></i>
-                        <h4 class="font-bold text-dark-text text-xl mb-2">Premium Support</h4>
-                        <p class="text-dark-text/70">24/7 customer support and tutorials</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 8. FAQ Section -->
-        <section id="faq" class="py-16 md:py-24 bg-secondary-light-gray">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-4xl font-extrabold text-dark-text text-center mb-12">Frequently Asked Questions</h2>
-                
-                <div class="space-y-4">
-                    <!-- FAQ 1 -->
-                    <details class="bg-primary-white p-6 rounded-xl shadow-lg">
-                        <summary class="font-semibold text-dark-text cursor-pointer focus:outline-none flex justify-between items-center text-lg">
-                            What software are your products compatible with?
-                            <span class="text-primary-gold text-xl ml-4">+</span>
-                        </summary>
-                        <div class="mt-4 p-4 bg-primary-white/50 rounded-lg">
-                            <p class="text-dark-text/70">
-                                <strong>LUTs:</strong> Adobe Premiere Pro, DaVinci Resolve, Final Cut Pro X (via plugins), Filmora, LumaFusion<br>
-                                <strong>Transitions:</strong> Premiere Pro (.mogrt), After Effects (.aep), Final Cut Pro (.fcpx)<br>
-                                <strong>Templates:</strong> Premiere Pro (.prproj), After Effects (.aep)
-                            </p>
-                        </div>
-                    </details>
-                    
-                    <!-- FAQ 2 -->
-                    <details class="bg-primary-white p-6 rounded-xl shadow-lg">
-                        <summary class="font-semibold text-dark-text cursor-pointer focus:outline-none flex justify-between items-center text-lg">
-                            How do I download the products after purchase?
-                            <span class="text-primary-gold text-xl ml-4">+</span>
-                        </summary>
-                        <div class="mt-4 p-4 bg-primary-white/50 rounded-lg">
-                            <p class="text-dark-text/70">
-                                Immediately after successful payment, you'll see a download section with direct ZIP file links. 
-                                You'll also receive an email with download links. Each purchase comes with a ZIP file containing 
-                                all files and detailed installation instructions.
-                            </p>
-                        </div>
-                    </details>
-                    
-                    <!-- FAQ 3 -->
-                    <details class="bg-primary-white p-6 rounded-xl shadow-lg">
-                        <summary class="font-semibold text-dark-text cursor-pointer focus:outline-none flex justify-between items-center text-lg">
-                            Are these suitable for LOG footage?
-                            <span class="text-primary-gold text-xl ml-4">+</span>
-                        </summary>
-                        <div class="mt-4 p-4 bg-primary-white/50 rounded-lg">
-                            <p class="text-dark-text/70">
-                                Yes! Our LUT packs include specific utility LUTs for S-Log, C-Log, and V-Log footage. 
-                                We provide LOG to Rec.709 conversion LUTs that ensure the final cinematic LUT is applied correctly.
-                            </p>
-                        </div>
-                    </details>
-                    
-                    <!-- FAQ 4 -->
-                    <details class="bg-primary-white p-6 rounded-xl shadow-lg">
-                        <summary class="font-semibold text-dark-text cursor-pointer focus:outline-none flex justify-between items-center text-lg">
-                            What is included in the ZIP files?
-                            <span class="text-primary-gold text-xl ml-4">+</span>
-                        </summary>
-                        <div class="mt-4 p-4 bg-primary-white/50 rounded-lg">
-                            <p class="text-dark-text/70">
-                                <strong>LUT Packs:</strong> .CUBE files, PDF guide, sample footage<br>
-                                <strong>Transition Packs:</strong> .mogrt files, .aep files, tutorial videos<br>
-                                <strong>Template Packs:</strong> Project files, placeholder media, font files, tutorials<br>
-                                All packs include a commercial license and lifetime updates.
-                            </p>
-                        </div>
-                    </details>
-                    
-                    <!-- FAQ 5 -->
-                    <details class="bg-primary-white p-6 rounded-xl shadow-lg">
-                        <summary class="font-semibold text-dark-text cursor-pointer focus:outline-none flex justify-between items-center text-lg">
-                            What is your refund policy?
-                            <span class="text-primary-gold text-xl ml-4">+</span>
-                        </summary>
-                        <div class="mt-4 p-4 bg-primary-white/50 rounded-lg">
-                            <p class="text-dark-text/70">
-                                Due to the digital nature of our products, all sales are final and non-refundable. 
-                                However, we offer free samples so you can test quality before purchasing. 
-                                If you have any issues with your purchase, our support team will help you resolve them.
-                            </p>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <!-- 9. Contact Section -->
-        <section id="contact" class="py-16 md:py-24 bg-primary-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    <div>
-                        <h2 class="text-4xl font-extrabold text-dark-text mb-8">Get In Touch</h2>
-                        <div class="space-y-6">
-                            <div class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text p-3 rounded-full mr-4">
-                                    <i class="fas fa-envelope"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text text-lg">Email Support</h4>
-                                    <p class="text-dark-text/70">support@weddinglutsshop.com</p>
-                                    <p class="text-dark-text/70 text-sm">Response time: Within 24 hours</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text p-3 rounded-full mr-4">
-                                    <i class="fas fa-comments"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text text-lg">Live Chat</h4>
-                                    <p class="text-dark-text/70">Available Monday-Friday, 9AM-6PM IST</p>
-                                    <p class="text-dark-text/70 text-sm">Click the chat icon in bottom-right corner</p>
-                                </div>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="bg-primary-gold text-dark-text p-3 rounded-full mr-4">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-bold text-dark-text text-lg">Knowledge Base</h4>
-                                    <p class="text-dark-text/70">Video tutorials and installation guides</p>
-                                    <p class="text-dark-text/70 text-sm">Visit our YouTube channel for tutorials</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div>
-                        <form class="space-y-4 bg-secondary-light-gray p-8 rounded-2xl shadow-lg border-t-4 border-primary-gold">
+                    <!-- AI Transition Generator -->
+                    <div class="bg-white rounded-2xl p-6 shadow-xl border border-premium-purple/20">
+                        <h3 class="text-2xl font-bold text-dark-text mb-4 flex items-center">
+                            <i class="fas fa-random text-premium-purple mr-3"></i>
+                            AI Transition Generator
+                        </h3>
+                        <div class="space-y-4">
                             <div>
-                                <label for="name" class="block text-sm font-medium text-dark-text/80 mb-2">Full Name</label>
-                                <input type="text" id="name" required 
-                                       class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-primary-gold focus:ring-primary-gold transition duration-300"
-                                       placeholder="Your Name">
-                            </div>
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-dark-text/80 mb-2">Email Address</label>
-                                <input type="email" id="email" required 
-                                       class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-primary-gold focus:ring-primary-gold transition duration-300"
-                                       placeholder="you@example.com">
-                            </div>
-                            <div>
-                                <label for="subject" class="block text-sm font-medium text-dark-text/80 mb-2">Subject</label>
-                                <select id="subject" 
-                                        class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-primary-gold focus:ring-primary-gold transition duration-300">
-                                    <option>General Inquiry</option>
-                                    <option>Product Support</option>
-                                    <option>Custom Request</option>
-                                    <option>Partnership</option>
+                                <label class="block text-sm font-medium mb-2">Select Transition Style</label>
+                                <select id="transition-style" class="w-full p-3 border rounded-lg">
+                                    <option value="cinematic">Cinematic Film Burn</option>
+                                    <option value="glitch">Digital Glitch</option>
+                                    <option value="light">Light Leak</option>
+                                    <option value="morph">Smooth Morph</option>
                                 </select>
                             </div>
                             <div>
-                                <label for="message" class="block text-sm font-medium text-dark-text/80 mb-2">Message</label>
-                                <textarea id="message" rows="4" required 
-                                          class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-primary-gold focus:ring-primary-gold transition duration-300"
-                                          placeholder="How can we help you?"></textarea>
+                                <label class="block text-sm font-medium mb-2">Transition Duration</label>
+                                <input type="range" min="0.5" max="3" step="0.1" value="1" 
+                                       class="w-full" id="transition-duration">
+                                <div class="flex justify-between text-sm text-gray-600">
+                                    <span>0.5s</span>
+                                    <span id="duration-value">1.0s</span>
+                                    <span>3.0s</span>
+                                </div>
                             </div>
-                            <button type="submit" 
-                                    class="w-full bg-dark-text text-primary-gold py-3 rounded-lg font-semibold hover:bg-dark-text/90 transition duration-300 shadow-md border border-primary-gold transform hover:scale-[1.02]">
-                                Send Message
+                            <button onclick="generateAITransition()" 
+                                    class="w-full bg-premium-purple text-white py-3 rounded-lg hover:bg-purple-700 transition font-bold">
+                                <i class="fas fa-bolt mr-2"></i>Generate AI Transition
                             </button>
-                        </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Features Grid -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-ai-blue/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-brain text-ai-blue text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Smart Color Grading</h4>
+                        <p class="text-gray-600">AI analyzes your footage and applies perfect color grading automatically</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-premium-purple/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-film text-premium-purple text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Auto Transitions</h4>
+                        <p class="text-gray-600">Generate custom transitions between scenes with AI</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <div class="w-12 h-12 bg-primary-gold/20 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-bolt text-primary-gold text-xl"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2">Instant Processing</h4>
+                        <p class="text-gray-600">Process 1-minute videos in under 30 seconds with our AI cloud</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Before/After Comparison -->
+        <section id="before-after" class="py-20 bg-dark-text text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black mb-4">See the Transformation</h2>
+                    <p class="text-gray-300 max-w-2xl mx-auto">Same footage, different treatment. Drag the slider to compare.</p>
+                </div>
+
+                <!-- Comparison Slider -->
+                <div class="comparison-slider" id="comparison-slider">
+                    <img id="before-image" 
+                         src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                         alt="Before - Raw Footage">
+                    <img id="after-image" 
+                         src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                         alt="After - With Wedding Gold LUT"
+                         style="clip-path: inset(0 0 0 50%)">
+                    <div class="slider-divider" id="slider-divider"></div>
+                    <div class="absolute top-4 left-4 bg-black/70 px-4 py-2 rounded-lg">
+                        <span class="font-bold">RAW</span>
+                    </div>
+                    <div class="absolute top-4 right-4 bg-primary-gold text-dark-text px-4 py-2 rounded-lg">
+                        <span class="font-bold">WITH LUT</span>
+                    </div>
+                </div>
+
+                <!-- Video Comparison -->
+                <div class="mt-16">
+                    <h3 class="text-3xl font-bold text-center mb-8">Video Comparison</h3>
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-primary-gold flex items-center">
+                                <i class="fas fa-video mr-2"></i>Before Processing
+                            </h4>
+                            <div class="video-comparison">
+                                <video class="w-full h-64 object-cover rounded-lg" controls>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-at-a-wedding-reception-4457-large.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-primary-gold flex items-center">
+                                <i class="fas fa-magic mr-2"></i>After AI Enhancement
+                            </h4>
+                            <div class="video-comparison">
+                                <video class="w-full h-64 object-cover rounded-lg" controls>
+                                    <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-4457-large.mp4" type="video/mp4">
+                                </video>
+                                <div class="absolute top-4 left-4 bg-primary-gold text-dark-text px-3 py-1 rounded text-sm font-bold">
+                                    AI PROCESSED
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Packs -->
+        <section id="pricing" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black mb-4">Choose Your Perfect Pack</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">From beginner to professional, we have a pack for every filmmaker</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- ₹99 Pack -->
+                    <div class="price-card bg-white border border-gray-200 rounded-2xl p-6">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-bold mb-4">
+                                STARTER
+                            </span>
+                            <h3 class="text-2xl font-black mb-2">Essential Pack</h3>
+                            <div class="flex items-baseline justify-center mb-4">
+                                <span class="text-4xl font-black">₹99</span>
+                                <span class="text-gray-500 ml-2">/one-time</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>5 Basic Wedding LUTs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>3 Social Media Presets</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Basic Tutorial</span>
+                            </li>
+                            <li class="flex items-center text-gray-400">
+                                <i class="fas fa-times mr-3"></i>
+                                <span>AI Tools Access</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('p99')" 
+                                class="w-full bg-gray-800 text-white py-3 rounded-lg hover:bg-black transition font-bold">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- ₹299 Pack -->
+                    <div class="price-card bg-white border border-gray-200 rounded-2xl p-6 popular">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-bold mb-4">
+                                POPULAR
+                            </span>
+                            <h3 class="text-2xl font-black mb-2">Pro Creator</h3>
+                            <div class="flex items-baseline justify-center mb-4">
+                                <span class="text-4xl font-black">₹299</span>
+                                <span class="text-gray-500 ml-2">/one-time</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>15 Premium LUTs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>10 Video Transitions</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>5 Social Media Templates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Basic AI Access</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('p299')" 
+                                class="w-full bg-primary-gold text-dark-text py-3 rounded-lg hover:bg-yellow-600 transition font-bold">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- ₹399 Pack -->
+                    <div class="price-card bg-white border border-gray-200 rounded-2xl p-6">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-3 py-1 bg-purple-100 text-premium-purple rounded-full text-sm font-bold mb-4">
+                                PREMIUM
+                            </span>
+                            <h3 class="text-2xl font-black mb-2">Premium Studio</h3>
+                            <div class="flex items-baseline justify-center mb-4">
+                                <span class="text-4xl font-black">₹399</span>
+                                <span class="text-gray-500 ml-2">/one-time</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>25 Premium LUTs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>20 Video Transitions</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>10 Wedding Templates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-green-500 mr-3"></i>
+                                <span>Full AI Tools Access</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('p399')" 
+                                class="w-full bg-premium-purple text-white py-3 rounded-lg hover:bg-purple-700 transition font-bold">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- ₹999 Pack -->
+                    <div class="price-card bg-gradient-to-br from-dark-text to-gray-900 text-white rounded-2xl p-6">
+                        <div class="text-center mb-6">
+                            <span class="inline-block px-3 py-1 bg-primary-gold text-dark-text rounded-full text-sm font-bold mb-4">
+                                ULTIMATE
+                            </span>
+                            <h3 class="text-2xl font-black mb-2">Ultimate Bundle</h3>
+                            <div class="flex items-baseline justify-center mb-4">
+                                <span class="text-4xl font-black">₹999</span>
+                                <span class="text-gray-300 ml-2">/one-time</span>
+                            </div>
+                        </div>
+                        <ul class="space-y-3 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary-gold mr-3"></i>
+                                <span>50+ Premium LUTs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary-gold mr-3"></i>
+                                <span>40+ Video Transitions</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary-gold mr-3"></i>
+                                <span>20 Wedding Templates</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-primary-gold mr-3"></i>
+                                <span>Lifetime AI Access</span>
+                            </li>
+                        </ul>
+                        <button onclick="addToCart('p999')" 
+                                class="w-full bg-primary-gold text-dark-text py-3 rounded-lg hover:bg-yellow-600 transition font-bold">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Shop Section -->
+        <section id="shop" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black mb-4">Shop Our Products</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Browse our collection of premium wedding filmmaking tools</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Product 1 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                 alt="Wedding Gold LUTs">
+                            <span class="absolute top-4 left-4 bg-primary-gold text-dark-text px-3 py-1 rounded-full text-sm font-bold">
+                                BEST SELLER
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Wedding Gold LUTs</h3>
+                            <p class="text-gray-600 mb-4">Warm cinematic tones for wedding videos</p>
+                            <div class="flex items-baseline mb-4">
+                                <span class="text-3xl font-black text-primary-gold">₹799</span>
+                                <span class="text-gray-400 line-through ml-2">₹1499</span>
+                            </div>
+                            <button onclick="addToCart('wg001')" 
+                                    class="w-full bg-dark-text text-white py-3 rounded-lg hover:bg-gray-800 transition font-bold">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                 alt="Cinematic Transitions">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Cinematic Transitions</h3>
+                            <p class="text-gray-600 mb-4">30+ premium transitions for wedding films</p>
+                            <div class="flex items-baseline mb-4">
+                                <span class="text-3xl font-black text-premium-purple">₹1299</span>
+                                <span class="text-gray-400 line-through ml-2">₹1999</span>
+                            </div>
+                            <button onclick="addToCart('ct002')" 
+                                    class="w-full bg-premium-purple text-white py-3 rounded-lg hover:bg-purple-700 transition font-bold">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                 alt="Video Templates">
+                            <span class="absolute top-4 right-4 bg-ai-blue text-white px-3 py-1 rounded-full text-sm font-bold">
+                                NEW
+                            </span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">AI Wedding Templates</h3>
+                            <p class="text-gray-600 mb-4">Smart templates with AI integration</p>
+                            <div class="flex items-baseline mb-4">
+                                <span class="text-3xl font-black text-ai-blue">₹1999</span>
+                                <span class="text-gray-400 line-through ml-2">₹2999</span>
+                            </div>
+                            <button onclick="addToCart('ai003')" 
+                                    class="w-full bg-ai-blue text-white py-3 rounded-lg hover:bg-blue-700 transition font-bold">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Templates -->
+        <section id="templates" class="py-20 bg-gradient-to-r from-premium-purple/10 to-ai-blue/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black mb-4">AI Video Templates</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Ready-to-use templates powered by AI</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Template 1 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative h-40 overflow-hidden">
+                            <video class="w-full h-full object-cover" autoplay muted loop>
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-4457-large.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <span class="font-bold">Modern Minimal</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Cinematic Opening</h3>
+                            <p class="text-gray-600 mb-4">AI-powered wedding film opening template</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-black text-premium-purple">₹499</span>
+                                <button onclick="addToCart('tm001')" 
+                                        class="px-4 py-2 bg-premium-purple text-white rounded-lg hover:bg-purple-700 transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template 2 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative h-40 overflow-hidden">
+                            <video class="w-full h-full object-cover" autoplay muted loop>
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-couple-at-a-wedding-reception-4457-large.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <span class="font-bold">Love Story</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Love Story Template</h3>
+                            <p class="text-gray-600 mb-4">Tell their story with AI-generated animations</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-black text-premium-purple">₹599</span>
+                                <button onclick="addToCart('tm002')" 
+                                        class="px-4 py-2 bg-premium-purple text-white rounded-lg hover:bg-purple-700 transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Template 3 -->
+                    <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="relative h-40 overflow-hidden">
+                            <video class="w-full h-full object-cover" autoplay muted loop>
+                                <source src="https://assets.mixkit.co/videos/preview/mixkit-wedding-couple-4457-large.mp4" type="video/mp4">
+                            </video>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <span class="font-bold">Reception</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Reception Highlights</h3>
+                            <p class="text-gray-600 mb-4">AI-optimized for dance and celebration footage</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-2xl font-black text-premium-purple">₹699</span>
+                                <button onclick="addToCart('tm003')" 
+                                        class="px-4 py-2 bg-premium-purple text-white rounded-lg hover:bg-purple-700 transition">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark-text border-t border-primary-gold pt-12 pb-8">
+    <footer class="bg-dark-text text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Company Info -->
+            <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h4 class="text-xl font-bold text-primary-gold mb-4">WeddingLutsShop</h4>
-                    <p class="text-sm text-secondary-light-gray mb-4">Premium LUTs, Templates & Transitions for Wedding Filmmakers</p>
-                    <p class="text-xs text-secondary-light-gray">User ID: <span id="user-id-display" class="font-mono">Loading...</span></p>
+                    <h3 class="text-2xl font-bold mb-4">
+                        <span class="text-primary-gold">Wedding</span>LUTs
+                    </h3>
+                    <p class="text-gray-400">Professional tools for wedding filmmakers</p>
                 </div>
-
-                <!-- Products -->
                 <div>
-                    <h4 class="text-lg font-semibold text-primary-white mb-4">Products</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#shop" class="text-secondary-light-gray hover:text-primary-gold">All Products</a></li>
-                        <li><a href="#samples" class="text-secondary-light-gray hover:text-primary-gold">Free Samples</a></li>
-                        <li><a href="#transitions" class="text-secondary-light-gray hover:text-primary-gold">Video Transitions</a></li>
-                        <li><a href="#templates" class="text-secondary-light-gray hover:text-primary-gold">Video Templates</a></li>
+                    <h4 class="text-lg font-bold mb-4">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#shop" class="text-gray-400 hover:text-primary-gold">LUTs</a></li>
+                        <li><a href="#templates" class="text-gray-400 hover:text-primary-gold">Templates</a></li>
+                        <li><a href="#ai-tools" class="text-gray-400 hover:text-ai-blue">AI Tools</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-primary-gold">Pricing</a></li>
                     </ul>
                 </div>
-
-                <!-- Resources -->
                 <div>
-                    <h4 class="text-lg font-semibold text-primary-white mb-4">Resources</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#faq" class="text-secondary-light-gray hover:text-primary-gold">FAQ</a></li>
-                        <li><a href="#about" class="text-secondary-light-gray hover:text-primary-gold">About Us</a></li>
-                        <li><a href="#contact" class="text-secondary-light-gray hover:text-primary-gold">Contact</a></li>
-                        <li><a href="#" class="text-secondary-light-gray hover:text-primary-gold">Tutorials</a></li>
+                    <h4 class="text-lg font-bold mb-4">Company</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-primary-gold">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-gold">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-gold">Support</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-primary-gold">Blog</a></li>
                     </ul>
                 </div>
-
-                <!-- Legal & Social -->
                 <div>
-                    <h4 class="text-lg font-semibold text-primary-white mb-4">Legal & Social</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-secondary-light-gray hover:text-primary-gold">Privacy Policy</a></li>
-                        <li><a href="#" class="text-secondary-light-gray hover:text-primary-gold">Terms of Service</a></li>
-                        <li><a href="#" class="text-secondary-light-gray hover:text-primary-gold">Refund Policy</a></li>
-                        <li class="flex space-x-4 mt-4">
-                            <a href="#" class="text-secondary-light-gray hover:text-primary-gold"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="text-secondary-light-gray hover:text-primary-gold"><i class="fab fa-youtube"></i></a>
-                            <a href="#" class="text-secondary-light-gray hover:text-primary-gold"><i class="fab fa-facebook"></i></a>
-                            <a href="#" class="text-secondary-light-gray hover:text-primary-gold"><i class="fab fa-twitter"></i></a>
-                        </li>
-                    </ul>
+                    <h4 class="text-lg font-bold mb-4">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-youtube text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-tiktok text-xl"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="mt-8 pt-6 border-t border-secondary-light-gray/50 text-center text-sm text-secondary-light-gray">
-                &copy; 2025 WeddingLutsShop. All Rights Reserved. | Made with <i class="fas fa-heart text-red-500"></i> for filmmakers
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 WeddingLutsShop. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-
-    <!-- --- Modals --- -->
-
     <!-- Cart Modal -->
-    <div id="cart-modal" class="modal fixed inset-0 bg-dark-text/70 z-50 flex justify-center items-center hidden no-print">
-        <div class="bg-primary-white border border-primary-gold rounded-2xl w-full max-w-lg mx-4 p-6 shadow-2xl animate-fadeInUp max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b-2 border-primary-gold pb-3 mb-4">
-                <h3 class="text-2xl font-bold text-primary-gold flex items-center">
-                    <i class="fas fa-shopping-cart mr-2"></i> Your Cart
-                </h3>
-                <button data-modal-close class="text-dark-text hover:text-primary-gold text-2xl">&times;</button>
+    <div id="cart-modal" class="fixed inset-0 bg-black/70 z-50 hidden flex items-center justify-center">
+        <div class="bg-white rounded-2xl w-full max-w-md mx-4 p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold">Your Cart</h3>
+                <button onclick="closeModal('cart-modal')" class="text-2xl">&times;</button>
             </div>
-            <ul id="cart-items-list" class="space-y-2 max-h-60 overflow-y-auto"></ul>
-            <div class="mt-6 pt-4 border-t border-secondary-light-gray">
-                <div class="flex justify-between items-center text-xl font-bold text-dark-text mb-4">
+            <div id="cart-items" class="max-h-64 overflow-y-auto mb-4">
+                <!-- Cart items will be added here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between text-xl font-bold mb-4">
                     <span>Total:</span>
                     <span id="cart-total">₹0</span>
                 </div>
-                <button id="checkout-button" 
-                        class="w-full bg-primary-gold text-dark-text py-3 rounded-lg font-extrabold hover:bg-yellow-600 transition duration-300 shadow-lg transform hover:scale-[1.02] flex items-center justify-center">
-                    <i class="fas fa-lock mr-2"></i> Proceed to Checkout
+                <button onclick="checkout()" 
+                        class="w-full bg-primary-gold text-dark-text py-3 rounded-lg font-bold hover:bg-yellow-600 transition">
+                    Proceed to Checkout
                 </button>
-                <p class="text-center text-dark-text/60 text-sm mt-3">
-                    <i class="fas fa-shield-alt mr-1"></i> Secure payment powered by Razorpay
-                </p>
             </div>
         </div>
     </div>
 
-    <!-- Payment Success Modal with Download Links -->
-    <div id="success-modal" class="modal fixed inset-0 bg-dark-text/90 z-50 flex justify-center items-center hidden no-print">
-        <div class="bg-primary-white border-2 border-primary-gold rounded-2xl w-full max-w-4xl mx-4 p-8 shadow-2xl animate-fadeInUp overflow-y-auto max-h-[90vh]">
-            <div class="flex justify-between items-start mb-6">
-                <div class="flex items-center">
-                    <div class="bg-primary-gold text-dark-text p-3 rounded-full mr-4">
-                        <i class="fas fa-check text-2xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-bold text-primary-gold">Payment Successful!</h3>
-                        <p class="text-dark-text">Your purchase is complete. Download your products below.</p>
-                    </div>
-                </div>
-                <button data-modal-close class="text-dark-text hover:text-primary-gold text-3xl">&times;</button>
-            </div>
-            
-            <!-- Download Links Container -->
-            <div id="download-links-container">
-                <!-- Download links will be inserted here dynamically -->
-            </div>
-            
-            <div class="mt-8 pt-6 border-t border-secondary-light-gray flex flex-col md:flex-row justify-between space-y-4 md:space-y-0">
-                <button onclick="viewInvoice()" 
-                        class="bg-dark-text text-primary-gold py-3 px-8 rounded-lg font-semibold hover:bg-dark-text/80 transition shadow-md border border-primary-gold flex items-center justify-center">
-                    <i class="fas fa-file-invoice mr-2"></i> View/Print Invoice
-                </button>
-                <button onclick="closeModal('success-modal')" 
-                        class="bg-primary-gold text-dark-text py-3 px-8 rounded-lg font-semibold hover:bg-yellow-600 transition shadow-md flex items-center justify-center">
-                    <i class="fas fa-shopping-bag mr-2"></i> Continue Shopping
-                </button>
-            </div>
-            
-            <div class="mt-8 p-6 bg-yellow-50 border-l-4 border-primary-gold rounded-lg">
-                <h4 class="font-bold text-dark-text mb-3 flex items-center">
-                    <i class="fas fa-question-circle text-primary-gold mr-2"></i> Need Help?
-                </h4>
-                <p class="text-dark-text/70 text-sm">
-                    If you encounter any issues with downloading or using our products, please email us at 
-                    <span class="text-primary-gold font-semibold">support@weddinglutsshop.com</span>. 
-                    We typically respond within 2-4 hours during business days.
-                </p>
-            </div>
+    <!-- Mobile Menu Modal -->
+    <div id="mobile-menu" class="fixed inset-0 bg-black/90 z-50 hidden md:hidden">
+        <div class="flex justify-end p-6">
+            <button onclick="closeModal('mobile-menu')" class="text-white text-3xl">&times;</button>
         </div>
-    </div>
-    
-    <!-- Mobile Nav Modal -->
-    <div id="mobile-nav-modal" class="modal fixed inset-0 bg-dark-text/95 z-40 hidden md:hidden">
-        <div class="p-8 bg-primary-white h-full overflow-y-auto">
-            <div class="flex justify-between items-center mb-8">
-                <h3 class="text-2xl font-bold text-primary-gold">Menu</h3>
-                <button data-modal-close class="text-dark-text hover:text-primary-gold text-4xl">&times;</button>
-            </div>
-            <nav class="flex flex-col space-y-6">
-                <a href="#home" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-home mr-3 text-primary-gold"></i> Home
-                </a>
-                <a href="#shop" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-shopping-bag mr-3 text-primary-gold"></i> Shop All
-                </a>
-                <a href="#samples" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-download mr-3 text-primary-gold"></i> Free Samples
-                </a>
-                <a href="#transitions" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-film mr-3 text-primary-gold"></i> Transitions
-                </a>
-                <a href="#templates" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-layer-group mr-3 text-primary-gold"></i> Templates
-                </a>
-                <a href="#about" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-info-circle mr-3 text-primary-gold"></i> About
-                </a>
-                <a href="#faq" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-question-circle mr-3 text-primary-gold"></i> FAQ
-                </a>
-                <a href="#contact" onclick="closeModal('mobile-nav-modal')" 
-                   class="text-2xl text-dark-text hover:text-primary-gold transition duration-200 flex items-center">
-                    <i class="fas fa-envelope mr-3 text-primary-gold"></i> Contact
-                </a>
-                <div class="pt-6 border-t border-gray-200 mt-6">
-                    <button onclick="openModal('cart-modal'); closeModal('mobile-nav-modal')" 
-                            class="w-full flex items-center justify-center bg-primary-gold text-dark-text py-3 rounded-lg font-bold">
-                        <i class="fas fa-shopping-cart mr-2"></i> View Cart (<span id="cart-badge-mobile">0</span>)
+        <div class="px-6 py-8">
+            <nav class="space-y-6">
+                <a href="#home" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">Home</a>
+                <a href="#shop" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">Shop</a>
+                <a href="#ai-tools" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">AI Tools</a>
+                <a href="#templates" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">Templates</a>
+                <a href="#before-after" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">Before/After</a>
+                <a href="#pricing" onclick="closeModal('mobile-menu')" class="block text-white text-2xl">Pricing</a>
+                <div class="pt-6 border-t border-gray-700">
+                    <button onclick="openModal('auth-modal'); closeModal('mobile-menu')" 
+                            class="w-full bg-primary-gold text-dark-text py-3 rounded-lg font-bold mb-3">
+                        Sign In
+                    </button>
+                    <button onclick="openModal('cart-modal'); closeModal('mobile-menu')" 
+                            class="w-full border border-primary-gold text-primary-gold py-3 rounded-lg font-bold">
+                        Cart (<span id="mobile-cart-badge">0</span>)
                     </button>
                 </div>
             </nav>
         </div>
     </div>
 
-    <!-- Live Chat Button -->
-    <div class="fixed bottom-6 right-6 z-30 no-print">
-        <button onclick="showNotification('Live chat will be available soon!', 'info')" 
-                class="bg-primary-gold text-dark-text p-4 rounded-full shadow-2xl hover:bg-yellow-600 transition duration-300 transform hover:scale-110">
-            <i class="fas fa-comments text-2xl"></i>
-        </button>
-    </div>
-
-    <!-- Additional JavaScript for filtering and cart badge update -->
+    <!-- Video.js -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize products grid
-            function initializeProductsGrid() {
-                const productsGrid = document.getElementById('products-grid');
-                if (!productsGrid) return;
-                
-                // Clear existing content
-                productsGrid.innerHTML = '';
-                
-                // Add all products
-                products.forEach(product => {
-                    const card = document.createElement('div');
-                    card.className = `product-card bg-white rounded-2xl overflow-hidden shadow-xl border border-secondary-light-gray transform hover:scale-[1.03] transition duration-300 ${product.category}`;
-                    card.setAttribute('data-category', product.category);
-                    
-                    card.innerHTML = `
-                        <div class="relative">
-                            <img src="${product.thumbnail}" alt="${product.name}" class="w-full h-56 object-cover">
-                            ${product.category === 'bundle' ? 
-                                `<span class="absolute top-3 right-3 bg-red-600 text-primary-white text-xs font-bold px-3 py-1 rounded-full shadow-md">BEST VALUE</span>` : 
-                                product.id === 'wg001' ?
-                                `<span class="absolute top-3 left-3 bg-primary-gold text-dark-text text-xs font-bold px-3 py-1 rounded-full shadow-md">BEST SELLER</span>` : ''}
+        // Global Variables
+        let cart = [];
+        let currentUser = null;
+        let products = {
+            'p99': { name: 'Essential Pack (₹99)', price: 99 },
+            'p299': { name: 'Pro Creator Pack (₹299)', price: 299 },
+            'p399': { name: 'Premium Studio Pack (₹399)', price: 399 },
+            'p999': { name: 'Ultimate Bundle (₹999)', price: 999 },
+            'wg001': { name: 'Wedding Gold LUTs', price: 799 },
+            'ct002': { name: 'Cinematic Transitions', price: 1299 },
+            'ai003': { name: 'AI Wedding Templates', price: 1999 },
+            'tm001': { name: 'Cinematic Opening Template', price: 499 },
+            'tm002': { name: 'Love Story Template', price: 599 },
+            'tm003': { name: 'Reception Highlights Template', price: 699 }
+        };
+
+        // Auth Functions
+        function switchAuthTab(tab) {
+            document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('register-form').classList.toggle('hidden', tab !== 'register');
+            document.getElementById('login-tab').classList.toggle('active', tab === 'login');
+            document.getElementById('register-tab').classList.toggle('active', tab === 'register');
+        }
+
+        function loginUser() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                showNotification('Please fill all fields', 'error');
+                return;
+            }
+            
+            // Simulate login
+            currentUser = { email, name: email.split('@')[0] };
+            showNotification('Successfully signed in!', 'success');
+            closeModal('auth-modal');
+            updateAuthUI();
+        }
+
+        function registerUser() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name || !email || !password || !confirm) {
+                showNotification('Please fill all fields', 'error');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showNotification('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Simulate registration
+            currentUser = { email, name };
+            showNotification('Account created successfully!', 'success');
+            closeModal('auth-modal');
+            switchAuthTab('login');
+            updateAuthUI();
+        }
+
+        function socialLogin(provider) {
+            showNotification(`Signing in with ${provider}...`, 'info');
+            // Simulate social login
+            setTimeout(() => {
+                currentUser = { 
+                    email: 'user@example.com', 
+                    name: 'Social User',
+                    provider 
+                };
+                showNotification(`Signed in with ${provider}!`, 'success');
+                closeModal('auth-modal');
+                updateAuthUI();
+            }, 1000);
+        }
+
+        function updateAuthUI() {
+            const headerAuth = document.querySelector('header .flex.items-center.space-x-4');
+            if (headerAuth && currentUser) {
+                headerAuth.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-primary-gold rounded-full flex items-center justify-center">
+                            <span class="font-bold">${currentUser.name.charAt(0)}</span>
                         </div>
-                        <div class="p-6">
-                            <div class="flex justify-between items-start mb-2">
-                                <h3 class="text-xl font-bold text-dark-text">${product.name}</h3>
-                                <span class="text-xs ${product.category === 'luts' ? 'bg-blue-100 text-blue-800' : 
-                                                     product.category === 'transitions' ? 'bg-purple-100 text-purple-800' : 
-                                                     product.category === 'templates' ? 'bg-green-100 text-green-800' : 
-                                                     'bg-yellow-100 text-yellow-800'} px-2 py-1 rounded-full">
-                                    ${product.category === 'luts' ? 'LUTs' : 
-                                      product.category === 'transitions' ? 'Transitions' : 
-                                      product.category === 'templates' ? 'Templates' : 'Bundle'}
-                                </span>
-                            </div>
-                            <p class="text-sm text-dark-text/70 mb-4">${product.description}</p>
-                            <div class="mb-4">
-                                ${product.features ? product.features.map(feature => 
-                                    `<span class="inline-block text-xs text-dark-text/60 bg-secondary-light-gray px-2 py-1 rounded mr-2 mb-2">${feature}</span>`
-                                ).join('') : ''}
-                            </div>
-                            <div class="flex items-baseline mb-4">
-                                <span class="text-3xl font-extrabold text-primary-gold mr-2">₹${product.price.toLocaleString('en-IN')}</span>
-                                ${product.originalPrice ? 
-                                    `<span class="text-sm line-through text-red-600">₹${product.originalPrice.toLocaleString('en-IN')}</span>` : ''}
-                            </div>
-                            <button onclick="addToCart('${product.id}')" 
-                                    class="w-full bg-dark-text text-primary-gold py-3 rounded-lg font-semibold hover:bg-dark-text/90 transition duration-300 shadow-md">
-                                Add to Cart
+                        <span>Hi, ${currentUser.name}</span>
+                        <button onclick="logout()" class="text-sm text-gray-600 hover:text-dark-text">
+                            Logout
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            showNotification('Logged out successfully', 'info');
+            updateAuthUI();
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Cart Functions
+        function addToCart(productId) {
+            if (!currentUser) {
+                showNotification('Please sign in to add items to cart', 'error');
+                openModal('auth-modal');
+                return;
+            }
+            
+            const product = products[productId];
+            if (!product) return;
+            
+            cart.push(product);
+            updateCartUI();
+            showNotification(`Added ${product.name} to cart!`, 'success');
+        }
+
+        function updateCartUI() {
+            const cartCount = cart.length;
+            document.getElementById('cart-badge').textContent = cartCount;
+            document.getElementById('mobile-cart-badge').textContent = cartCount;
+            
+            const cartItems = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+            
+            if (cartItems) {
+                cartItems.innerHTML = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    total += item.price;
+                    const div = document.createElement('div');
+                    div.className = 'flex justify-between items-center py-2 border-b';
+                    div.innerHTML = `
+                        <span>${item.name}</span>
+                        <div class="flex items-center space-x-4">
+                            <span>₹${item.price}</span>
+                            <button onclick="removeFromCart(${index})" class="text-red-500">
+                                <i class="fas fa-trash"></i>
                             </button>
                         </div>
                     `;
-                    
-                    productsGrid.appendChild(card);
+                    cartItems.appendChild(div);
+                });
+                
+                if (cartTotal) {
+                    cartTotal.textContent = `₹${total}`;
+                }
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            showNotification('Item removed from cart', 'info');
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty', 'error');
+                return;
+            }
+            
+            // Simulate checkout
+            showNotification('Processing payment...', 'info');
+            setTimeout(() => {
+                showNotification('Payment successful! Download links sent to your email.', 'success');
+                cart = [];
+                updateCartUI();
+                closeModal('cart-modal');
+            }, 2000);
+        }
+
+        // Before/After Slider
+        function initComparisonSlider() {
+            const slider = document.getElementById('comparison-slider');
+            const divider = document.getElementById('slider-divider');
+            const afterImage = document.getElementById('after-image');
+            
+            let isDragging = false;
+            
+            function updateSlider(x) {
+                const rect = slider.getBoundingClientRect();
+                let position = ((x - rect.left) / rect.width) * 100;
+                position = Math.max(0, Math.min(100, position));
+                
+                afterImage.style.clipPath = `inset(0 0 0 ${position}%)`;
+                divider.style.left = `${position}%`;
+            }
+            
+            divider.addEventListener('mousedown', () => {
+                isDragging = true;
+                document.body.style.cursor = 'ew-resize';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                updateSlider(e.clientX);
+            });
+            
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+                document.body.style.cursor = 'default';
+            });
+            
+            // Touch events for mobile
+            divider.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                e.preventDefault();
+            });
+            
+            document.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                updateSlider(e.touches[0].clientX);
+            });
+            
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+        }
+
+        // AI Video Tools
+        function startAIEnhancement() {
+            if (!currentUser) {
+                showNotification('Please sign in to use AI tools', 'error');
+                openModal('auth-modal');
+                return;
+            }
+            
+            const loader = document.getElementById('ai-loader');
+            const progress = document.getElementById('ai-progress');
+            
+            loader.classList.remove('hidden');
+            progress.style.width = '0%';
+            
+            // Simulate AI processing
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 10;
+                progress.style.width = `${width}%`;
+                
+                if (width >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        loader.classList.add('hidden');
+                        showNotification('Video enhanced successfully!', 'success');
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        function generateAITransition() {
+            if (!currentUser) {
+                showNotification('Please sign in to use AI tools', 'error');
+                openModal('auth-modal');
+                return;
+            }
+            
+            const style = document.getElementById('transition-style').value;
+            const duration = document.getElementById('transition-duration').value;
+            
+            showNotification(`Generating ${style} transition (${duration}s)...`, 'info');
+            
+            // Simulate AI generation
+            setTimeout(() => {
+                showNotification('AI transition generated! Download ready.', 'success');
+            }, 3000);
+        }
+
+        function downloadAIResult() {
+            showNotification('Starting download...', 'info');
+        }
+
+        // Notification System
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            const messageEl = document.getElementById('notification-message');
+            
+            // Set color based on type
+            notification.className = notification.className.replace(/bg-(red|green|blue|yellow)-\d+/, '');
+            
+            switch(type) {
+                case 'success':
+                    notification.classList.add('bg-green-500');
+                    break;
+                case 'error':
+                    notification.classList.add('bg-red-500');
+                    break;
+                case 'info':
+                    notification.classList.add('bg-blue-500');
+                    break;
+                case 'warning':
+                    notification.classList.add('bg-yellow-500');
+                    break;
+            }
+            
+            messageEl.textContent = message;
+            notification.classList.remove('hidden');
+            notification.classList.add('show');
+            
+            // Auto hide
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.classList.add('hidden');
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initComparisonSlider();
+            updateCartUI();
+            
+            // Update transition duration display
+            const durationSlider = document.getElementById('transition-duration');
+            const durationValue = document.getElementById('duration-value');
+            
+            if (durationSlider && durationValue) {
+                durationSlider.addEventListener('input', function() {
+                    durationValue.textContent = `${this.value}s`;
                 });
             }
             
-            // Initialize products on page load
-            initializeProductsGrid();
-            
-            // Filter functionality
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // Update active button
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const filter = this.getAttribute('data-filter');
-                    const productCards = document.querySelectorAll('.product-card');
-                    
-                    productCards.forEach(card => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+            // Close modals on outside click
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeModal(this.id);
+                    }
                 });
             });
             
-            // Update mobile cart badge
-            function updateMobileCartBadge() {
-                const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-                document.getElementById('cart-badge-mobile').textContent = cartCount;
-            }
-            
-            // Override updateCartUI to update mobile badge too
-            const originalUpdateCartUI = window.updateCartUI;
-            window.updateCartUI = function() {
-                if (originalUpdateCartUI) originalUpdateCartUI();
-                updateMobileCartBadge();
-            };
-            
-            // Initial update
-            updateMobileCartBadge();
-            
-            // Auto-hide notification after 5 seconds
-            setInterval(() => {
-                const notification = document.getElementById('app-notification');
-                if (notification && !notification.classList.contains('hidden')) {
-                    notification.classList.add('hidden');
+            // Close modals on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        if (!modal.classList.contains('hidden')) {
+                            closeModal(modal.id);
+                        }
+                    });
                 }
-            }, 5000);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+
+        // Initialize video players
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Video.js players if any
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                // Add basic video controls
+                if (!video.hasAttribute('controls')) {
+                    video.addEventListener('click', function() {
+                        if (this.paused) {
+                            this.play();
+                        } else {
+                            this.pause();
+                        }
+                    });
+                }
+            });
         });
     </script>
-
 </body>
 </html>
